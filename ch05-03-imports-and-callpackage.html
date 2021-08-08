@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>The Nix Package Manager - NixOS Nix-Book</title>
+        <title>Imports and callPackage - NixOS Nix-Book</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="ch00-00-the-nix-package-manager.html">The Nix Package Manager</a></li><li class="chapter-item expanded affix "><a href="ch01-00-forward.html">Forward</a></li><li class="chapter-item expanded affix "><a href="ch02-00-introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="ch03-00-getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-derivations.html"><strong aria-hidden="true">2.</strong> Derivations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-create-a-derivation.html"><strong aria-hidden="true">2.1.</strong> Create a Derivation</a></li><li class="chapter-item expanded "><a href="ch04-02-realise-a-derivation.html"><strong aria-hidden="true">2.2.</strong> Realise a Derivation</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-the-nix-language.html"><strong aria-hidden="true">3.</strong> The Nix Language</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-language-basics.html"><strong aria-hidden="true">3.1.</strong> Language Basics</a></li><li class="chapter-item expanded "><a href="ch05-02-functions.html"><strong aria-hidden="true">3.2.</strong> Functions</a></li><li class="chapter-item expanded "><a href="ch05-03-imports-and-callpackage.html"><strong aria-hidden="true">3.3.</strong> Imports and callPackage</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="ch00-00-the-nix-package-manager.html">The Nix Package Manager</a></li><li class="chapter-item expanded affix "><a href="ch01-00-forward.html">Forward</a></li><li class="chapter-item expanded affix "><a href="ch02-00-introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="ch03-00-getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-derivations.html"><strong aria-hidden="true">2.</strong> Derivations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-create-a-derivation.html"><strong aria-hidden="true">2.1.</strong> Create a Derivation</a></li><li class="chapter-item expanded "><a href="ch04-02-realise-a-derivation.html"><strong aria-hidden="true">2.2.</strong> Realise a Derivation</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-the-nix-language.html"><strong aria-hidden="true">3.</strong> The Nix Language</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-language-basics.html"><strong aria-hidden="true">3.1.</strong> Language Basics</a></li><li class="chapter-item expanded "><a href="ch05-02-functions.html"><strong aria-hidden="true">3.2.</strong> Functions</a></li><li class="chapter-item expanded "><a href="ch05-03-imports-and-callpackage.html" class="active"><strong aria-hidden="true">3.3.</strong> Imports and callPackage</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -163,18 +163,24 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="the-nix-package-manager"><a class="header" href="#the-nix-package-manager">The Nix Package Manager</a></h1>
+                        <h1 id="imports-and-callpackage"><a class="header" href="#imports-and-callpackage">Imports and callPackage</a></h1>
+<ul>
+<li>trivial import example</li>
+<li>example of import json data</li>
+<li>example of creating a derivation with imports</li>
+<li>example of creating the same derivation, but with callPackage</li>
+</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-
-                        
-                            <a rel="next" href="ch01-00-forward.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
+                            <a rel="prev" href="ch05-02-functions.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
                             </a>
+                        
+
                         
 
                         <div style="clear: both"></div>
@@ -184,11 +190,11 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-
-                
-                    <a rel="next" href="ch01-00-forward.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
+                    <a rel="prev" href="ch05-02-functions.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
                     </a>
+                
+
                 
             </nav>
 
