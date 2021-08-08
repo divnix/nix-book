@@ -1,10 +1,10 @@
 # Summary
 
-- [The Nix Package Manager](./ch00-00-the-nix-package-manager.md)
+[The Nix Package Manager](./ch00-00-the-nix-package-manager.md)
 
-- [Forward](./ch01-00-forward.md)
+[Forward](./ch01-00-forward.md)
 
-- [Introduction](./ch02-00-introduction.md)
+[Introduction](./ch02-00-introduction.md)
 
 - [Getting Started](./ch03-00-getting-started.md)
   - [Installation](./ch03-01-installation.md)
