@@ -14,3 +14,6 @@
   - [Realise a Derivation](./ch04-02-realise-a-derivation.md)
 
 - [The Nix Language](./ch05-00-the-nix-language.md)
+  - [Language Basics](./ch05-01-language-basics.md)
+  - [Functions](./ch05-02-functions.md)
+  - [Imports and callPackage](./ch05-03-imports-and-callpackage.md)
