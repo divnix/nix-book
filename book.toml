@@ -1,0 +1,6 @@
+[book]
+authors = ["jonringer", "nrdxp"]
+language = "en"
+multilingual = false
+src = "src"
+title = "NixOS Nix-Book"

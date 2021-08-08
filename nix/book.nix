@@ -14,4 +14,11 @@ in stdenv.mkDerivation {
   src = cleanedSource;
 
   nativeBuildInputs = [ mdbook ];
+
+  buildPhase = "mdbook build";
+
+  installPhase = ''
+    mkdir $out
+    cp -r book/* $out
+  '';
 }
