@@ -17,3 +17,10 @@
   - [Language Basics](./ch05-01-language-basics.md)
   - [Functions](./ch05-02-functions.md)
   - [Imports and callPackage](./ch05-03-imports-and-callpackage.md)
+
+- [Building a Nix Package](./ch06-00-building-a-nix-package.md)
+  - [Simple C program](./ch06-01-simple-c-program.md)
+  - [Phases](./ch06-02-phases.md)
+  - [Build Dependencies](./ch06-03-build-dependencies.md)
+  - [Runtime Dependencies](./ch06-04-runtime-dependencies.md)
+  - [Building Packages for Other Toolchains](./ch06-05-building-packages-for-other-toolchains.md)
