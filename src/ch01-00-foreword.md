@@ -34,4 +34,6 @@ configurations, services, and the ecosystems they make up, into small
 composable units which may then be reproduced, distributed, ran, or
 packaged in a totally consistent manner, completely tailored by the user.
 Get ready to rethink the way you think about software distribution and welcome
-to the Nix community! — _Jon Ringer and Tim DeHerrera_
+to the Nix community!
+
+— _Jon Ringer and Tim DeHerrera_
