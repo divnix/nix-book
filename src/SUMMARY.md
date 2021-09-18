@@ -24,3 +24,5 @@
   - [Build Dependencies](./ch06-03-build-dependencies.md)
   - [Runtime Dependencies](./ch06-04-runtime-dependencies.md)
   - [Building Packages for Other Toolchains](./ch06-05-building-packages-for-other-toolchains.md)
+  - [Building Packages for Other Languages](./ch06-06-building-packages-for-other-languages.md)
+  - [Patching](./ch06-07-patching.md)
