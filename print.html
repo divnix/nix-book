@@ -180,16 +180,86 @@
 <h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
 <p><em>Something similar to the beginning of https://nixos.org/guides/nix-pills/install-on-your-running-system.html#idm140737320805808</em></p>
 <h1 id="derivations"><a class="header" href="#derivations">Derivations</a></h1>
-<p><em>Quick intro to derivations</em></p>
-<p><em>Define</em></p>
-<ul>
-<li>Instantiation</li>
-<li>Realisation</li>
-</ul>
+<p>Derivations are the defining feature of nix. Derivations attempt to capture everything
+that it would take to build a packages. The cummilation of all build depdencies
+is commonly refered to as the package's &quot;build closure&quot;. More dependencies that a
+package refers to, more package will need to be created in order to attempt a
+build. Generally, dependencies of a derivation are other derivations.</p>
+<h2 id="types-of-derivations"><a class="header" href="#types-of-derivations">Types of Derivations</a></h2>
+<h3 id="evaluated-derivations"><a class="header" href="#evaluated-derivations">Evaluated Derivations</a></h3>
+<p>These are generally what are referred to when the term derivation is used. These
+derivations are defined about all of the dependencies, build phases, and flags
+present during a build. When a store path has a hash, this is what the hash
+is capturing.</p>
+<h3 id="fixed-output-derivations-fods"><a class="header" href="#fixed-output-derivations-fods">Fixed Output Derivations (FODs)</a></h3>
+<p>These are the &quot;leaves&quot; of any build closure, in that, they do not refer to other
+derivations. These derivations are defined by
+their content. These derivations are easily differientiated because they
+will contain a sha256 (or other hash) which is used to enforce that an artifact
+is reproducible.</p>
+<p>One critical difference from evaluated derivations is that Fixed-Output derivations
+are able to have access to the network while fetching contents. This &quot;impurity&quot;
+is offset by enforcing that the hash matches, and reproducibility is delegated to
+the process which fetchs the assets.</p>
+<h3 id="content-addressable-derivations-ca-derivations"><a class="header" href="#content-addressable-derivations-ca-derivations">Content-Addressable Derivations (CA Derivations)</a></h3>
+<p><strong>NOTE:</strong> This derivation type is still in an experimental state. And care should be given
+to enabling content-addressable derivation on a machine.</p>
+<p>TODO: Add section on CA derivations</p>
 <h1 id="create-a-derivation"><a class="header" href="#create-a-derivation">Create a Derivation</a></h1>
-<p><em>Show example of creating and viewing a derivation</em></p>
+<p>Before a package is built, a derivation must be created. This process of creating a derivation
+is called instantiatiation&quot;, or sometimes also refered to as evaluation. Every package in
+nixpkgs has a corresponding derivation. This means that we can
+create and inspect the derivation for anything exposed in nixpkgs. An example
+would be:</p>
+<pre><code>$ nix-instantiate '&lt;nixpkgs&gt;' -A hello
+/nix/store/byqskk0549v1zz1b2a61lb7llfn4h5bw-hello-2.10.drv
+
+# or using flakes, nix&gt;=2.4
+
+$ nix eval nixpkgs#hello.drvPath
+&quot;/nix/store/byqskk0549v1zz1b2a61lb7llfn4h5bw-hello-2.10.drv&quot;
+</code></pre>
+<p>To inspect the contents of the drv, one can use the <code>nix show-derivation</code> utility.</p>
+<pre><code>$ nix show-derivation /nix/store/byqskk0549v1zz1b2a61lb7llfn4h5bw-hello-2.10.drv
+{
+  &quot;/nix/store/byqskk0549v1zz1b2a61lb7llfn4h5bw-hello-2.10.drv&quot;: {
+    &quot;outputs&quot;: {
+      &quot;out&quot;: {
+        &quot;path&quot;: &quot;/nix/store/f4bywv8hjwl0ckv7l077pnap81h6qxw4-hello-2.10&quot;
+      }
+...
+</code></pre>
+<p>There's a few important features of a derivation:</p>
+<ul>
+<li>It's a description of how to build the package from source</li>
+<li>The output paths are determined before the build begins</li>
+<li>All dependencies are known, and have a similar derivation description of their builds</li>
+<li>Any additional flags (makeFlags, configuration flags, cflags, or ld flags) are explicitly stated</li>
+<li>There's no ambiguity. The system, architecture, and other options have been resolved.</li>
+<li>It's immutable. If you want to change a derivation, you need to evaluate a new one.</li>
+<li>It's unique. The hashing scheme ensures that there should only ever be one derivation; if two derivations match, then they are exactly the same in every way.</li>
+</ul>
 <h1 id="realise-a-derivation"><a class="header" href="#realise-a-derivation">Realise a derivation</a></h1>
-<p><em>Show example of realising a .drv</em></p>
+<p>Building a derivation is referred to as &quot;realisation&quot;. A derivation is just an abstract
+description of a package, based upon what it requires to build. However, a derivation does
+not produce any expected outputs until it has been realised into something tangible. Taking
+the example from above, one can build a derivations like so:</p>
+<pre><code>$ nix-store --realise /nix/store/byqskk0549v1zz1b2a61lb7llfn4h5bw-hello-2.10.drv
+...
+/nix/store/f4bywv8hjwl0ckv7l077pnap81h6qxw4-hello-2.10
+
+# or in nix flakes:
+
+$ nix build nixpkgs#hello
+...
+/nix/store/f4bywv8hjwl0ckv7l077pnap81h6qxw4-hello-2.10
+</code></pre>
+<p>The <code>nix-build</code> and <code>nix build</code> commands will perform both instantiation and realisation. 
+These are the most commands used when iterating on packages. One could also do:</p>
+<pre><code>$ nix-buid '&lt;nixpkgs&gt;' -A hello
+# these are the same, nix build is just much more concise
+$ nix-store --realise $(nix-instantiate '&lt;nixpkgs&gt;' -A hello)
+</code></pre>
 <h1 id="the-nix-language"><a class="header" href="#the-nix-language">The Nix Language</a></h1>
 <p><em>Concise version of https://nixos.org/guides/nix-pills/basics-of-language.html</em></p>
 <h1 id="nix-language-basics"><a class="header" href="#nix-language-basics">Nix Language Basics</a></h1>

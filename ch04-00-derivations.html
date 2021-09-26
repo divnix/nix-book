@@ -164,12 +164,31 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="derivations"><a class="header" href="#derivations">Derivations</a></h1>
-<p><em>Quick intro to derivations</em></p>
-<p><em>Define</em></p>
-<ul>
-<li>Instantiation</li>
-<li>Realisation</li>
-</ul>
+<p>Derivations are the defining feature of nix. Derivations attempt to capture everything
+that it would take to build a packages. The cummilation of all build depdencies
+is commonly refered to as the package's &quot;build closure&quot;. More dependencies that a
+package refers to, more package will need to be created in order to attempt a
+build. Generally, dependencies of a derivation are other derivations.</p>
+<h2 id="types-of-derivations"><a class="header" href="#types-of-derivations">Types of Derivations</a></h2>
+<h3 id="evaluated-derivations"><a class="header" href="#evaluated-derivations">Evaluated Derivations</a></h3>
+<p>These are generally what are referred to when the term derivation is used. These
+derivations are defined about all of the dependencies, build phases, and flags
+present during a build. When a store path has a hash, this is what the hash
+is capturing.</p>
+<h3 id="fixed-output-derivations-fods"><a class="header" href="#fixed-output-derivations-fods">Fixed Output Derivations (FODs)</a></h3>
+<p>These are the &quot;leaves&quot; of any build closure, in that, they do not refer to other
+derivations. These derivations are defined by
+their content. These derivations are easily differientiated because they
+will contain a sha256 (or other hash) which is used to enforce that an artifact
+is reproducible.</p>
+<p>One critical difference from evaluated derivations is that Fixed-Output derivations
+are able to have access to the network while fetching contents. This &quot;impurity&quot;
+is offset by enforcing that the hash matches, and reproducibility is delegated to
+the process which fetchs the assets.</p>
+<h3 id="content-addressable-derivations-ca-derivations"><a class="header" href="#content-addressable-derivations-ca-derivations">Content-Addressable Derivations (CA Derivations)</a></h3>
+<p><strong>NOTE:</strong> This derivation type is still in an experimental state. And care should be given
+to enabling content-addressable derivation on a machine.</p>
+<p>TODO: Add section on CA derivations</p>
 
                     </main>
 
