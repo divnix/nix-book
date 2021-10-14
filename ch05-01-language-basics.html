@@ -164,14 +164,52 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="nix-language-basics"><a class="header" href="#nix-language-basics">Nix Language Basics</a></h1>
+<h2 id="primitive-values"><a class="header" href="#primitive-values">Primitive Values</a></h2>
+<p>These mostly similar to JSON:</p>
+<table><thead><tr><th>Type</th><th>Description</th><th>Example</th></tr></thead><tbody>
+<tr><td>integer</td><td>Whole number</td><td>1</td></tr>
+<tr><td>float</td><td>Floating point number</td><td>1.054</td></tr>
+<tr><td>string</td><td>UTF-8 string</td><td>&quot;hello!&quot;</td></tr>
+<tr><td>path</td><td>File or url</td><td>./default.nix</td></tr>
+</tbody></table>
+<p><em>NOTE</em>: Paths are special. They will be resolved relative to the file.
+They must start with a &quot;.&quot; or &quot;/&quot;, similar to how they would be expressed in a shell.
+If a path is referenced as part of a package, that path will be added to the
+nix store, and all references to that path will be substituted with the nix store path.</p>
+<p><em>NOTE</em>: If a path to a directory is passed, but a file was expected; then nix will look
+for a <code>default.nix</code> located in that directory, and will target that.</p>
+<h2 id="strings"><a class="header" href="#strings">Strings</a></h2>
+<p>Nix exposes two ways to express strings. Strings are enclosed with double quotes: <code>&quot;hello&quot;</code>.
+This works well for small strings, such as simple flags. However, it's common to write a
+block of commands which need to be executed; for this, nix also has multi-line support with
+the &quot;lines&quot; construct. &quot;lines&quot; are denoted by two single quotes.</p>
+<p>Example usage of lines:</p>
+<pre><code>  postPatch = ''
+    ./autogen.sh
+    mkdir build
+    cd build
+  '';
+</code></pre>
+<p>Here, we have postPatch being assigned a series of commands to be ran as part of a build.</p>
+<h2 id="lists"><a class="header" href="#lists">Lists</a></h2>
+<p>Lists work similarly to most other languages, but are whitespace delimited. <code>[ 1 2 ]</code> is an
+array with elements <code>1</code> and <code>2</code>.</p>
+<p><strong>Note</strong>: Since lists are whitespace delimited, ensure that you encapsulate expressions with <code>( )</code>.
+A common mistake is doing something like <code>extraPackages = [ somePackage.override { withPython = true; } ]</code>.
+In this example, it's an array of two elements, <code>somePackage.override</code> is a function, and the other element
+is an attr set. However, it was likely meant to be a single element array with the attr set applied to function
+and creating a new derivation.</p>
+<h2 id="attribute-set-attr-set"><a class="header" href="#attribute-set-attr-set">Attribute Set (Attr set)</a></h2>
+<p>This can be thought of as a dictionary or map in most other languages. The important distinct is that the
+keys are always ordered, so that the order doesn't influence how a derivation will produce a hash. Attr sets
+values do not need to be of the same type. Attr sets are constructed using an <code>=</code> sign which denotes key value
+pairs which are separated with semicolons <code>;</code>, the attr set is enclosed with curly braces '{ }'.</p>
+<pre><code>{ foo = &quot;bar&quot;; count = 5; flags = ''-g -O3''; }
+</code></pre>
+<p>You will commonly see empty att sets, and example being:</p>
+<pre><code>  hello = callPackage ../applications/misc/hello { };
+</code></pre>
 <ul>
-<li>Primitive values</li>
-<li>Strings
-<ul>
-<li>&quot;lines&quot; e.g. '' something ''</li>
-</ul>
-</li>
-<li>Lists</li>
 <li>Attr Sets</li>
 <li>If expressions</li>
 <li>Let expressins</li>
