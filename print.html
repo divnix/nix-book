@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="ch00-00-the-nix-package-manager.html">The Nix Package Manager</a></li><li class="chapter-item expanded affix "><a href="ch01-00-forward.html">Forward</a></li><li class="chapter-item expanded affix "><a href="ch02-00-introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="ch03-00-getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-derivations.html"><strong aria-hidden="true">2.</strong> Derivations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-create-a-derivation.html"><strong aria-hidden="true">2.1.</strong> Create a Derivation</a></li><li class="chapter-item expanded "><a href="ch04-02-realise-a-derivation.html"><strong aria-hidden="true">2.2.</strong> Realise a Derivation</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-the-nix-language.html"><strong aria-hidden="true">3.</strong> The Nix Language</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-language-basics.html"><strong aria-hidden="true">3.1.</strong> Language Basics</a></li><li class="chapter-item expanded "><a href="ch05-02-functions.html"><strong aria-hidden="true">3.2.</strong> Functions</a></li><li class="chapter-item expanded "><a href="ch05-03-imports-and-callpackage.html"><strong aria-hidden="true">3.3.</strong> Imports and callPackage</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="ch00-00-the-nix-package-manager.html">The Nix Package Manager</a></li><li class="chapter-item expanded affix "><a href="ch01-00-forward.html">Forward</a></li><li class="chapter-item expanded affix "><a href="ch02-00-introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="ch03-00-getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-derivations.html"><strong aria-hidden="true">2.</strong> Derivations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-create-a-derivation.html"><strong aria-hidden="true">2.1.</strong> Create a Derivation</a></li><li class="chapter-item expanded "><a href="ch04-02-realise-a-derivation.html"><strong aria-hidden="true">2.2.</strong> Realise a Derivation</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-the-nix-language.html"><strong aria-hidden="true">3.</strong> The Nix Language</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-language-basics.html"><strong aria-hidden="true">3.1.</strong> Language Basics</a></li><li class="chapter-item expanded "><a href="ch05-02-functions.html"><strong aria-hidden="true">3.2.</strong> Functions</a></li><li class="chapter-item expanded "><a href="ch05-03-imports-and-callpackage.html"><strong aria-hidden="true">3.3.</strong> Imports and callPackage</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-building-a-nix-package.html"><strong aria-hidden="true">4.</strong> Building a Nix Package</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-simple-c-program.html"><strong aria-hidden="true">4.1.</strong> Simple C program</a></li><li class="chapter-item expanded "><a href="ch06-02-phases.html"><strong aria-hidden="true">4.2.</strong> Phases</a></li><li class="chapter-item expanded "><a href="ch06-03-build-dependencies.html"><strong aria-hidden="true">4.3.</strong> Build Dependencies</a></li><li class="chapter-item expanded "><a href="ch06-04-runtime-dependencies.html"><strong aria-hidden="true">4.4.</strong> Runtime Dependencies</a></li><li class="chapter-item expanded "><a href="ch06-05-building-packages-for-other-toolchains.html"><strong aria-hidden="true">4.5.</strong> Building Packages for Other Toolchains</a></li><li class="chapter-item expanded "><a href="ch06-06-building-packages-for-other-languages.html"><strong aria-hidden="true">4.6.</strong> Building Packages for Other Languages</a></li><li class="chapter-item expanded "><a href="ch06-07-patching.html"><strong aria-hidden="true">4.7.</strong> Patching</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -291,6 +291,104 @@ $ nix-store --realise $(nix-instantiate '&lt;nixpkgs&gt;' -A hello)
 <li>example of import json data</li>
 <li>example of creating a derivation with imports</li>
 <li>example of creating the same derivation, but with callPackage</li>
+</ul>
+<h1 id="building-a-nix-package"><a class="header" href="#building-a-nix-package">Building a Nix Package</a></h1>
+<p><em>Derivations were already introduced, expand on what a &quot;package&quot; is, how to build one using the cli</em></p>
+<h1 id="simple-c-program"><a class="header" href="#simple-c-program">Simple C program</a></h1>
+<h1 id="phases"><a class="header" href="#phases">Phases</a></h1>
+<h1 id="build-dependencies"><a class="header" href="#build-dependencies">Build Dependencies</a></h1>
+<p>How to add build dependencies for a packages</p>
+<ul>
+<li>Difference between nativeBuildInputs and buildInputs</li>
+<li>Difference between propagated and non-propagated inputs</li>
+<li>Demonstrate some common usage patterns around dependencies</li>
+</ul>
+<p>How do packages find dependencies when building?</p>
+<ul>
+<li>They don't, nix attempts to fulfill assumptions made by the toolchain
+<ul>
+<li>Generally delegated to tooling which specializes in dependency discovery
+<ul>
+<li><code>PKG_CONFIG_PATH</code>? for <code>pkg-config</code></li>
+<li><code>CMAKE_MODULE_PATH</code>? for <code>cmake</code></li>
+<li><code>PYTHONPATH</code> for <code>python</code> when using <code>buildPythonPackage</code></li>
+<li>etc.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Explain difference between out, dev, lib, and other outputs</p>
+<ul>
+<li>It's a common use case to reference one or more outputs</li>
+<li>Mention the lib's <code>getDev</code>, <code>getDev</code>, <code>getLib</code>, and <code>getMan</code> helpers</li>
+<li>TODO: Link to another section expanding on multi-output derivations</li>
+</ul>
+<h1 id="runtime-dependencies"><a class="header" href="#runtime-dependencies">Runtime Dependencies</a></h1>
+<ul>
+<li>
+<p>Explain how nix finds runtime dependencies (essentially greps for valid /nix/store/... paths)</p>
+<ul>
+<li>TODO: link to another section on how to reduce closure sizes</li>
+<li>TODO: link to another section on how to ensure runtime dependencies are correctly picked up
+<ul>
+<li>E.g. jar files are compressed, but may reference another package which needs to be present on the host</li>
+<li>Generally this is done by doing <code>echo ${dependency} &gt; $out/nix-support</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>How to determine a runtime depdency (e.g. <code>nix-store -q --requisites</code>)</p>
+</li>
+<li>
+<p>How to wrap programs so that certain dependencies are present on PATH or in other ways</p>
+</li>
+<li>
+<p>Mention that patching is sometimes required (e.g. python), as there's not always a
+deterministic way to define how a package will be consumed (e.g. python module importing another)</p>
+</li>
+</ul>
+<h1 id="building-packages-for-other-toolchains"><a class="header" href="#building-packages-for-other-toolchains">Building Packages for Other Toolchains</a></h1>
+<ul>
+<li>Introduce the concept of shellhooks</li>
+<li>Provide links to documentation for:
+<ul>
+<li>Cmake</li>
+<li>Meson</li>
+<li>Bazel</li>
+</ul>
+</li>
+</ul>
+<h1 id="building-nix-packages-for-non-c-programming-languages"><a class="header" href="#building-nix-packages-for-non-c-programming-languages">Building Nix packages for non-C programming languages</a></h1>
+<ul>
+<li>
+<p>Almost all support for other programming languages are built
+upon stdenv.mkDerivation</p>
+</li>
+<li>
+<p>Provide links to official documentation on a given programming language</p>
+</li>
+</ul>
+<h1 id="patching-packages"><a class="header" href="#patching-packages">Patching Packages</a></h1>
+<ul>
+<li>
+<p>Common scenario where a pull request hasn't been merged or a new release hasn't
+been cut, but a change should be applied to a given package.</p>
+</li>
+<li>
+<p>Cover <code>patches</code> attr for mkDerivation</p>
+</li>
+<li>
+<p>Introduce <code>fetchpatch</code> utility</p>
+<ul>
+<li>Show example</li>
+<li>Make note that fetchpatch does it's own sanitization, meaning that fetchpatch
+and <code>nix-prefetch-url</code> will generally create different FODs</li>
+<li>Make note that generally a comment should be added to explain why a patch is being
+added, and when is it an appropriate time to remove it</li>
+</ul>
+</li>
 </ul>
 
                     </main>
