@@ -25,3 +25,10 @@ $ nix-buid '<nixpkgs>' -A hello
 # these are the same, nix build is just much more concise
 $ nix-store --realise $(nix-instantiate '<nixpkgs>' -A hello)
 ```
+
+*Note:* Many other commands also will realise a derivation
+as part of a workflow. Some examples are:
+`nix-shell`, `nix shell`, `nix-env`, `nix run`, and `nix profile`.
+These commands are very goal oriented and will differ
+significantly in how they leverage nix, often realisation
+is an side-effect to achieve that goal.
