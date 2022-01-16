@@ -164,8 +164,8 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="functions"><a class="header" href="#functions">Functions</a></h1>
-<p>Nix only has unary functions: functions are only
-able to take one parameter. However, in combination with
+<p>Nix only has unary functions: unary functions are functions which
+only accept one parameter. However, in combination with
 <a href="https://en.wikipedia.org/wiki/currying">uncurrying</a>, you can
 create functions which take an arbitrary number of parameters.</p>
 <p>Functions can be treated as values, and freely passed to other
@@ -176,7 +176,7 @@ to variable, much as you would do to a literal.</p>
 nix-repl&gt; (x: x + 2) 3
 5
 
-# naming a single parameter function, then later applying it
+# assigning a function to a variable, then later applying it
 nix-repl&gt; addTwo = x: x + 2
 
 nix-repl&gt; addTwo 3
@@ -220,7 +220,7 @@ nix-repl&gt; addTwoOptional  { x = 6; }
 8
 </code></pre>
 <p><strong>Note</strong>: The <code>@</code> syntax is not very common for most nix expressions.
-It's most common use case are &quot;helpers&quot;, which only care about a
+Its most common use case are &quot;helpers&quot;, which only care about a
 subset of arguments, and will then call another function with some
 of the inputs pruned. A good example of this is the <code>pkgs.fetchFromGithub</code>
 fetcher; which will know how to translate owner, repo, rev, and
