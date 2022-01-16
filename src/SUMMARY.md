@@ -17,6 +17,8 @@
   - [Language Basics](./ch05-01-language-basics.md)
   - [Functions](./ch05-02-functions.md)
   - [Imports and callPackage](./ch05-03-imports-and-callpackage.md)
+  - [Best Practices](./ch05-04-best-practices.md)
+  - [Common Mistakes](./ch05-05-common-mistakes.md)
 
 - [Building a Nix Package](./ch06-00-building-a-nix-package.md)
   - [Simple C program](./ch06-01-simple-c-program.md)

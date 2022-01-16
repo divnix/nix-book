@@ -43,18 +43,14 @@ Here, we have postPatch being assigned a series of commands to be ran as part of
 Lists work similarly to most other languages, but are whitespace delimited. `[ 1 2 ]` is an
 array with elements `1` and `2`.
 
-**Note**: Since lists are whitespace delimited, ensure that you encapsulate expressions with `( )`.
-A common mistake is doing something like `extraPackages = [ somePackage.override { withPython = true; } ]`.
-In this example, it's an array of two elements, `somePackage.override` is a function, and the other element
-is an attr set. However, it was likely meant to be a single element array with the attr set applied to function
-and creating a new derivation.
+**Note**: For oddities around lists and elements which use whitespace, please see [list common mistakes](./ch05-05-common-mistakes.html#lists).
 
 ## Attribute Set (Attr set)
 
 This can be thought of as a dictionary or map in most other languages. The important distinct is that the
 keys are always ordered, so that the order doesn't influence how a derivation will produce a hash. Attr sets
 values do not need to be of the same type. Attr sets are constructed using an `=` sign which denotes key value
-pairs which are separated with semicolons `;`, the attr set is enclosed with curly braces '{ }'.
+pairs which are separated with semicolons `;`, the attr set is enclosed with curly braces `{ }`.
 
 ```
 { foo = "bar"; count = 5; flags = ''-g -O3''; }
@@ -65,9 +61,77 @@ You will commonly see empty att sets, and example being:
   hello = callPackage ../applications/misc/hello { };
 ```
 
+## If / Else logic
 
-- Attr Sets
-- If expressions
-- Let expressins
-- with expressions
-- laziness
+Like many other functional programming languages, you cannot
+use `if` without an accompanying `else` clause. This is because
+the expression needs to return a value, not just follow a code
+path.
+
+```
+  extension = if stdenv.isDarwin then
+      ".dylib"
+    else
+      ".so";
+```
+
+**Note**: The proper way to find the shared library extension
+within nixpkgs is `hostPlatform.extensions.sharedLibrary`.
+
+## Let expressions
+
+Let expressions are a way to define values to be used later in a given 'in' scope.
+Generally these are used to alter a given value to conform to a
+slightly different format. Let expressions can refer
+to other values defined in the same let scope. For haskell users,
+let expressions work similarly to how they work in Haskell.
+
+```
+  src = let
+    # e.g. 3.1-2 -> 3_1_2
+    srcVersion = lib.strings.replaceStrings [ "." "-" ] [ "_" "_"] version;
+    srcUrl = "https://example.com/download/${pname}-${srcVersion}.tar.gz";
+  in fetchurl {
+    url = srcUrl;
+    sha256 = "...";
+  };
+```
+  
+## With expressions
+
+With expressions allows for many values on an attr set to be
+exposed by their key names.
+
+```
+  # before
+  meta = {
+    licenses = lib.licenses.cc0;
+    maintainers = [ lib.maintainers.jane lib.maintainers.joe ];
+    platforms = lib.platforms.unix;
+  };
+```
+
+```
+  # after
+  meta = with lib; {
+    licenses = licenses.cc0;
+    maintainers = with maintainers; [ jane joe ];
+    platforms = platforms.unix;
+  };
+```
+
+## Laziness
+
+Many pure functional programming languages also have the feature that the
+evaluation model of the language is lazy. This means that the values
+of a data structure aren't computed until needed, they are lazily computed.
+The benefits for nix is that evaluating a package doesn't mean computing
+all packages, but only computing the dependency graph for the packages
+requested. In practice this means limiting the scope of an action from
+80,000+ possible dependencies to just the dependencies explicitly mentioned
+by the nix expressions.
+
+Although laziness isn't a hard requirement for nix to work. The purity
+model of nix makes laziness more of symptom than an explicit design goal.
+However, It does enable many implicit benefits such as [memoization](https://en.wikipedia.org/wiki/Memoization).
+
