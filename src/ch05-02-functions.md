@@ -1,7 +1,7 @@
 # Functions
 
-Nix only has unary functions: functions are only
-able to take one parameter. However, in combination with
+Nix only has unary functions: unary functions are functions which
+only accept one parameter. However, in combination with
 [uncurrying](https://en.wikipedia.org/wiki/currying), you can
 create functions which take an arbitrary number of parameters.
 
@@ -15,7 +15,7 @@ Function examples:
 nix-repl> (x: x + 2) 3
 5
 
-# naming a single parameter function, then later applying it
+# assigning a function to a variable, then later applying it
 nix-repl> addTwo = x: x + 2
 
 nix-repl> addTwo 3
@@ -64,7 +64,7 @@ nix-repl> addTwoOptional  { x = 6; }
 ```
 
 **Note**: The `@` syntax is not very common for most nix expressions.
-It's most common use case are "helpers", which only care about a
+Its most common use case are "helpers", which only care about a
 subset of arguments, and will then call another function with some
 of the inputs pruned. A good example of this is the `pkgs.fetchFromGithub`
 fetcher; which will know how to translate owner, repo, rev, and
