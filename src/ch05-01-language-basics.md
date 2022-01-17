@@ -50,16 +50,28 @@ array with elements `1` and `2`.
 This can be thought of as a dictionary or map in most other languages. The important distinct is that the
 keys are always ordered, so that the order doesn't influence how a derivation will produce a hash. Attr sets
 values do not need to be of the same type. Attr sets are constructed using an `=` sign which denotes key value
-pairs which are separated with semicolons `;`, the attr set is enclosed with curly braces `{ }`.
+pairs which are separated with semicolons `;`, the attr set is enclosed with curly braces `{ }`. Selection
+of an attribute is done through dot-notation `<set>.<key>`.
 
 ```
-{ foo = "bar"; count = 5; flags = ''-g -O3''; }
+> a = { foo = "bar"; count = 5; flags = ''-g -O3''; }
+> a.count
+5
 ```
 
-You will commonly see empty att sets, and example being:
+You will commonly see empty att sets in nixpkgs, and example being:
 ```
   hello = callPackage ../applications/misc/hello { };
 ```
+
+## Derivations
+
+Technically, a derivation is just an attr set which has a few special attributes
+set to valid values which then nix can later realise into a build. Promotion
+from an attr set to derivation is facilitated through the `builtins.derivation`
+function. However directly calling the builtin is highly discouraged within
+nixpkgs. Instead people are encouraged to use stdenv.mkDerivation and other
+establed mkDerivation helpers to achieve their package goals.
 
 ## If / Else logic
 
@@ -124,7 +136,7 @@ exposed by their key names.
 
 Many pure functional programming languages also have the feature that the
 evaluation model of the language is lazy. This means that the values
-of a data structure aren't computed until needed, they are lazily computed.
+of a data structure aren't computed until needed.
 The benefits for nix is that evaluating a package doesn't mean computing
 all packages, but only computing the dependency graph for the packages
 requested. In practice this means limiting the scope of an action from
