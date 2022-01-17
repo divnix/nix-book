@@ -199,12 +199,22 @@ array with elements <code>1</code> and <code>2</code>.</p>
 <p>This can be thought of as a dictionary or map in most other languages. The important distinct is that the
 keys are always ordered, so that the order doesn't influence how a derivation will produce a hash. Attr sets
 values do not need to be of the same type. Attr sets are constructed using an <code>=</code> sign which denotes key value
-pairs which are separated with semicolons <code>;</code>, the attr set is enclosed with curly braces <code>{ }</code>.</p>
-<pre><code>{ foo = &quot;bar&quot;; count = 5; flags = ''-g -O3''; }
+pairs which are separated with semicolons <code>;</code>, the attr set is enclosed with curly braces <code>{ }</code>. Selection
+of an attribute is done through dot-notation <code>&lt;set&gt;.&lt;key&gt;</code>.</p>
+<pre><code>&gt; a = { foo = &quot;bar&quot;; count = 5; flags = ''-g -O3''; }
+&gt; a.count
+5
 </code></pre>
-<p>You will commonly see empty att sets, and example being:</p>
+<p>You will commonly see empty att sets in nixpkgs, and example being:</p>
 <pre><code>  hello = callPackage ../applications/misc/hello { };
 </code></pre>
+<h2 id="derivations"><a class="header" href="#derivations">Derivations</a></h2>
+<p>Technically, a derivation is just an attr set which has a few special attributes
+set to valid values which then nix can later realise into a build. Promotion
+from an attr set to derivation is facilitated through the <code>builtins.derivation</code>
+function. However directly calling the builtin is highly discouraged within
+nixpkgs. Instead people are encouraged to use stdenv.mkDerivation and other
+establed mkDerivation helpers to achieve their package goals.</p>
 <h2 id="if--else-logic"><a class="header" href="#if--else-logic">If / Else logic</a></h2>
 <p>Like many other functional programming languages, you cannot
 use <code>if</code> without an accompanying <code>else</code> clause. This is because
@@ -252,7 +262,7 @@ exposed by their key names.</p>
 <h2 id="laziness"><a class="header" href="#laziness">Laziness</a></h2>
 <p>Many pure functional programming languages also have the feature that the
 evaluation model of the language is lazy. This means that the values
-of a data structure aren't computed until needed, they are lazily computed.
+of a data structure aren't computed until needed.
 The benefits for nix is that evaluating a package doesn't mean computing
 all packages, but only computing the dependency graph for the packages
 requested. In practice this means limiting the scope of an action from
