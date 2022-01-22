@@ -12,6 +12,7 @@
 - [Derivations](./ch04-00-derivations.md)
   - [Create a Derivation](./ch04-01-create-a-derivation.md)
   - [Realise a Derivation](./ch04-02-realise-a-derivation.md)
+  - [Using Derivations from Nix](./ch04-03-using-derivations-from-nix.md)
 
 - [The Nix Language](./ch05-00-the-nix-language.md)
   - [Language Basics](./ch05-01-language-basics.md)
