@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Stdenv - Nix-Book</title>
+        <title>Using Derivations from Nix - Nix-Book</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="ch00-00-the-nix-package-manager.html">The Nix Package Manager</a></li><li class="chapter-item expanded affix "><a href="ch01-00-forward.html">Forward</a></li><li class="chapter-item expanded affix "><a href="ch02-00-introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="ch03-00-getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-derivations.html"><strong aria-hidden="true">2.</strong> Derivations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-create-a-derivation.html"><strong aria-hidden="true">2.1.</strong> Create a Derivation</a></li><li class="chapter-item expanded "><a href="ch04-02-realise-a-derivation.html"><strong aria-hidden="true">2.2.</strong> Realise a Derivation</a></li><li class="chapter-item expanded "><a href="ch04-03-using-derivations-from-nix.html"><strong aria-hidden="true">2.3.</strong> Using Derivations from Nix</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-the-nix-language.html"><strong aria-hidden="true">3.</strong> The Nix Language</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-language-basics.html"><strong aria-hidden="true">3.1.</strong> Language Basics</a></li><li class="chapter-item expanded "><a href="ch05-02-functions.html"><strong aria-hidden="true">3.2.</strong> Functions</a></li><li class="chapter-item expanded "><a href="ch05-03-imports-and-callpackage.html"><strong aria-hidden="true">3.3.</strong> Imports and callPackage</a></li><li class="chapter-item expanded "><a href="ch05-04-best-practices.html"><strong aria-hidden="true">3.4.</strong> Best Practices</a></li><li class="chapter-item expanded "><a href="ch05-05-common-mistakes.html"><strong aria-hidden="true">3.5.</strong> Common Mistakes</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-building-a-nix-package.html"><strong aria-hidden="true">4.</strong> Building a Nix Package</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-simple-c-program.html"><strong aria-hidden="true">4.1.</strong> Simple C program</a></li><li class="chapter-item expanded "><a href="ch06-02-stdenv.html" class="active"><strong aria-hidden="true">4.2.</strong> Stdenv</a></li><li class="chapter-item expanded "><a href="ch06-03-phases.html"><strong aria-hidden="true">4.3.</strong> Phases</a></li><li class="chapter-item expanded "><a href="ch06-04-build-dependencies.html"><strong aria-hidden="true">4.4.</strong> Build Dependencies</a></li><li class="chapter-item expanded "><a href="ch06-05-runtime-dependencies.html"><strong aria-hidden="true">4.5.</strong> Runtime Dependencies</a></li><li class="chapter-item expanded "><a href="ch06-06-building-packages-for-other-toolchains.html"><strong aria-hidden="true">4.6.</strong> Building Packages for Other Toolchains</a></li><li class="chapter-item expanded "><a href="ch06-07-building-packages-for-other-languages.html"><strong aria-hidden="true">4.7.</strong> Building Packages for Other Languages</a></li><li class="chapter-item expanded "><a href="ch06-08-patching.html"><strong aria-hidden="true">4.8.</strong> Patching</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="ch00-00-the-nix-package-manager.html">The Nix Package Manager</a></li><li class="chapter-item expanded affix "><a href="ch01-00-forward.html">Forward</a></li><li class="chapter-item expanded affix "><a href="ch02-00-introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="ch03-00-getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-derivations.html"><strong aria-hidden="true">2.</strong> Derivations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-create-a-derivation.html"><strong aria-hidden="true">2.1.</strong> Create a Derivation</a></li><li class="chapter-item expanded "><a href="ch04-02-realise-a-derivation.html"><strong aria-hidden="true">2.2.</strong> Realise a Derivation</a></li><li class="chapter-item expanded "><a href="ch04-03-using-derivations-from-nix.html" class="active"><strong aria-hidden="true">2.3.</strong> Using Derivations from Nix</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-the-nix-language.html"><strong aria-hidden="true">3.</strong> The Nix Language</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-language-basics.html"><strong aria-hidden="true">3.1.</strong> Language Basics</a></li><li class="chapter-item expanded "><a href="ch05-02-functions.html"><strong aria-hidden="true">3.2.</strong> Functions</a></li><li class="chapter-item expanded "><a href="ch05-03-imports-and-callpackage.html"><strong aria-hidden="true">3.3.</strong> Imports and callPackage</a></li><li class="chapter-item expanded "><a href="ch05-04-best-practices.html"><strong aria-hidden="true">3.4.</strong> Best Practices</a></li><li class="chapter-item expanded "><a href="ch05-05-common-mistakes.html"><strong aria-hidden="true">3.5.</strong> Common Mistakes</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-building-a-nix-package.html"><strong aria-hidden="true">4.</strong> Building a Nix Package</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-simple-c-program.html"><strong aria-hidden="true">4.1.</strong> Simple C program</a></li><li class="chapter-item expanded "><a href="ch06-02-stdenv.html"><strong aria-hidden="true">4.2.</strong> Stdenv</a></li><li class="chapter-item expanded "><a href="ch06-03-phases.html"><strong aria-hidden="true">4.3.</strong> Phases</a></li><li class="chapter-item expanded "><a href="ch06-04-build-dependencies.html"><strong aria-hidden="true">4.4.</strong> Build Dependencies</a></li><li class="chapter-item expanded "><a href="ch06-05-runtime-dependencies.html"><strong aria-hidden="true">4.5.</strong> Runtime Dependencies</a></li><li class="chapter-item expanded "><a href="ch06-06-building-packages-for-other-toolchains.html"><strong aria-hidden="true">4.6.</strong> Building Packages for Other Toolchains</a></li><li class="chapter-item expanded "><a href="ch06-07-building-packages-for-other-languages.html"><strong aria-hidden="true">4.7.</strong> Building Packages for Other Languages</a></li><li class="chapter-item expanded "><a href="ch06-08-patching.html"><strong aria-hidden="true">4.8.</strong> Patching</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -163,30 +163,59 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="stdenv"><a class="header" href="#stdenv">Stdenv</a></h1>
-<p><em>Introduce stdenv</em></p>
-<ul>
-<li>Includes c toolchain (gcc + binutils on linux), coreutils, gawk, sed, findutils, strip, bash, make, bzip2, gzip</li>
-<li>Nix differences
-<ul>
-<li>Wrapped compiler</li>
-<li>stdenv <a href="https://nixos.org/manual/nixpkgs/stable/#ssec-stdenv-functions">shell functions</a></li>
-</ul>
-</li>
-</ul>
+                        <h1 id="using-derivations-from-nix"><a class="header" href="#using-derivations-from-nix">Using Derivations from Nix</a></h1>
+<p>The derivation is the main abstraction of nix. All of
+Nixpkgs and NixOS is created by leveraging derivations
+to create new derivations, scripts, services, and even
+entire linux distributions. The ability to compose these
+usecases with uniquely named packages allows nix the
+freedom to aggressively share common dependencies, meanwhile
+allowing the flexibility to have potentially incompatible
+packages available on the system.</p>
+<p>The nix language allows for consumption of derivations
+to be quite transparent. For example:</p>
+<pre><code>$ nix-build -E 'with import &lt;nixpkgs&gt; { }; pkgs.runCommand &quot;greet.sh&quot; {} &quot;${pkgs.hello}/bin/hello -g \&quot;Hello $USER!\&quot;&quot;'
+</code></pre>
+<p>Will create a <code>greet.sh</code> script which will create the user.
+We can see from the contents of the resulting file that
+<code>pkgs.hello</code> was substituted for the realised output path.
+This allows for us to not worry about what the unique name
+of the derivation will be, but rather worry about the 
+contents post realisation.</p>
+<h3 id="use-of-outpath-as-a-tostring"><a class="header" href="#use-of-outpath-as-a-tostring">Use of &quot;outPath&quot; as a toString</a></h3>
+<p>This is one of the oddities of nix, but stringification of
+an object which contains a key &quot;outPath&quot; will return
+the contents of the &quot;outPath&quot; key. Since all derivations
+will have an outPath, any usage of them in a string
+will yeild the store path that they create.</p>
+<pre><code class="language-nix">nix-repl&gt; a = { outPath = &quot;foo&quot;; }
+
+nix-repl&gt; &quot;${a} bar&quot;
+&quot;foo bar&quot;
+</code></pre>
+<h4 id="if-it-gets-converted-to-a-string-how-does-nix-know-how-to-build-the-derivation"><a class="header" href="#if-it-gets-converted-to-a-string-how-does-nix-know-how-to-build-the-derivation">If it gets converted to a string, how does nix know how to build the derivation?</a></h4>
+<p>Nix has a concept of &quot;contextual strings&quot;. Although
+the string <code>/nix/store/f4bywv8hjwl0ckv7l077pnap81h6qxw4-hello-2.10/bin/hello</code>
+is written to the file to create the script; there's still
+a &quot;context&quot; from where that path came from. Nix will
+also retain this and add as an input to the derivation for
+the script. After the package is built, nix will
+scan for nix store references, and retain valid
+nix store paths as runtime dependencies.
+This and other nix behavior will be demonstrated further in later sections.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="ch06-01-simple-c-program.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="ch04-02-realise-a-derivation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="ch06-03-phases.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="ch05-00-the-nix-language.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -198,13 +227,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="ch06-01-simple-c-program.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="ch04-02-realise-a-derivation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="ch06-03-phases.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="ch05-00-the-nix-language.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
