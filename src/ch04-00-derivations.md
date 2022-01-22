@@ -1,19 +1,14 @@
 # Derivations
 
 Derivations are the defining feature of nix. Derivations attempt to capture everything
-that it would take to build a packages. The cummilation of all build depdencies
-is commonly refered to as the package's "build closure". More dependencies that a
+that it would take to build a package. This includes, but is not limited to: source code,
+dependencies, build flags, build and installation steps, tests, and environment variables.
+The culmination of all direct and transitive build depdencies
+is commonly refered to as the derivations's "build closure". More dependencies that a
 package refers to, more package will need to be created in order to attempt a
 build. Generally, dependencies of a derivation are other derivations.
 
 ## Types of Derivations
-
-### Evaluated Derivations
-
-These are generally what are referred to when the term derivation is used. These
-derivations are defined about all of the dependencies, build phases, and flags
-present during a build. When a store path has a hash, this is what the hash
-is capturing.
 
 ### Fixed Output Derivations (FODs)
 
@@ -27,6 +22,15 @@ One critical difference from evaluated derivations is that Fixed-Output derivati
 are able to have access to the network while fetching contents. This "impurity"
 is offset by enforcing that the hash matches, and reproducibility is delegated to
 the process which fetchs the assets.
+
+Many of the `fetch*` utilities in nixpkgs and nix's builtins will create FODs.
+
+### Evaluated Derivations
+
+Evaluation derivations are generally what are referred to when the term derivation is used. These
+derivations are defined by all of the dependencies, build phases, and flags
+present during a build. Nix captures all of the variables which constitute a
+derivation and uses a cryptographic hash to give each derivation a unique name.
 
 ### Content-Addressable Derivations (CA Derivations)
 
