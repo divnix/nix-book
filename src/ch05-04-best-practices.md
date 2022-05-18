@@ -1,7 +1,5 @@
 # Best Practices
 
-TODO: add what are things people should do.
-
 ## Avoid excessive `with` usage
 
 Although `with` can be useful in small scopes. Doing something such as
