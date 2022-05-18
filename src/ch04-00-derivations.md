@@ -25,18 +25,27 @@ the process which fetchs the assets.
 
 Many of the `fetch*` utilities in nixpkgs and nix's builtins will create FODs.
 
-### Evaluated Derivations
+### Input-Addressed Derivations
 
-Evaluation derivations are generally what are referred to when the term derivation is used. These
+Input-Addressed derivations are generally what are referred to when the term derivation is used. These
 derivations are defined by all of the dependencies, build phases, and flags
 present during a build. Nix captures all of the variables which constitute a
 derivation and uses a cryptographic hash to give each derivation a unique name.
 
+`stdenv.mkDerivation` and related `build*` helpers will create an input-addressed derivation.
+
 ### Content-Addressable Derivations (CA Derivations)
 
-**NOTE:** This derivation type is still in an experimental state. And care should be given
-to enabling content-addressable derivation on a machine.
+NOTE**: CA Derivations are still considered experimental at the time of writing
 
-TODO: Add section on CA derivations
+Content-Addressable (CA) derivations are a hybrid of both FOD and IA derivations.
+The problem which CA derivations are rebuilds. In the IA derivation model, a patch
+to openssl will cause most user applications to rebuild since that derivation was
+affected in any manner. Under CA derivations, eventually nix will be able to determine
+that the derivation which was realized before the openssl patch is the same as the
+derivation after the patch was applied with only store paths being changed. This can
+be viewed as an "early cutoff" for the new derivation, all downstream packages can
+be re-used as the effect of the openssl patch is no a runtime influence.
 
-
+CA derivations are an opt-in feature, but don't require the user to alter their
+existing workflows.
