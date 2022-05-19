@@ -164,7 +164,15 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="building-a-nix-package"><a class="header" href="#building-a-nix-package">Building a Nix Package</a></h1>
-<p><em>Derivations were already introduced, expand on what a &quot;package&quot; is, how to build one using the cli</em></p>
+<p>Building a package for nix can range from trivial to near impossible.
+Generally the difference between the two experiences is
+determined by how many assumptions the build process makes.
+Toolchains which have strong integrity guarantees (e.g. lock files)
+, and allow for offline builds are generally more nix compatible.</p>
+<p>Nix is language and toolchain agnostic. Support for many
+toolchains have been added to nixpkgs, but the nix build
+environment is very constrained so many <toolchain>2nix have
+arisen to try and bridge the gap in expectations.</p>
 
                     </main>
 

@@ -207,15 +207,24 @@ are able to have access to the network while fetching contents. This &quot;impur
 is offset by enforcing that the hash matches, and reproducibility is delegated to
 the process which fetchs the assets.</p>
 <p>Many of the <code>fetch*</code> utilities in nixpkgs and nix's builtins will create FODs.</p>
-<h3 id="evaluated-derivations"><a class="header" href="#evaluated-derivations">Evaluated Derivations</a></h3>
-<p>Evaluation derivations are generally what are referred to when the term derivation is used. These
+<h3 id="input-addressed-derivations"><a class="header" href="#input-addressed-derivations">Input-Addressed Derivations</a></h3>
+<p>Input-Addressed derivations are generally what are referred to when the term derivation is used. These
 derivations are defined by all of the dependencies, build phases, and flags
 present during a build. Nix captures all of the variables which constitute a
 derivation and uses a cryptographic hash to give each derivation a unique name.</p>
+<p><code>stdenv.mkDerivation</code> and related <code>build*</code> helpers will create an input-addressed derivation.</p>
 <h3 id="content-addressable-derivations-ca-derivations"><a class="header" href="#content-addressable-derivations-ca-derivations">Content-Addressable Derivations (CA Derivations)</a></h3>
-<p><strong>NOTE:</strong> This derivation type is still in an experimental state. And care should be given
-to enabling content-addressable derivation on a machine.</p>
-<p>TODO: Add section on CA derivations</p>
+<p>NOTE**: CA Derivations are still considered experimental at the time of writing</p>
+<p>Content-Addressable (CA) derivations are a hybrid of both FOD and IA derivations.
+The problem which CA derivations are rebuilds. In the IA derivation model, a patch
+to openssl will cause most user applications to rebuild since that derivation was
+affected in any manner. Under CA derivations, eventually nix will be able to determine
+that the derivation which was realized before the openssl patch is the same as the
+derivation after the patch was applied with only store paths being changed. This can
+be viewed as an &quot;early cutoff&quot; for the new derivation, all downstream packages can
+be re-used as the effect of the openssl patch is no a runtime influence.</p>
+<p>CA derivations are an opt-in feature, but don't require the user to alter their
+existing workflows.</p>
 <h1 id="create-a-derivation"><a class="header" href="#create-a-derivation">Create a Derivation</a></h1>
 <p>Before a package is built, a derivation must be created. The derivation can
 be thought of as the unamiguous definition of how to build a package.
@@ -508,14 +517,88 @@ of the inputs pruned. A good example of this is the <code>pkgs.fetchFromGithub</
 fetcher; which will know how to translate owner, repo, rev, and
 other options into a call to <code>builtsin.fetchzip</code> or <code>builtins.fetchgit</code>.</p>
 <h1 id="imports-and-callpackage"><a class="header" href="#imports-and-callpackage">Imports and callPackage</a></h1>
-<ul>
-<li>trivial import example</li>
-<li>example of import json data</li>
-<li>example of creating a derivation with imports</li>
-<li>example of creating the same derivation, but with callPackage</li>
-</ul>
+<h2 id="import"><a class="header" href="#import">Import</a></h2>
+<p><code>import</code> is one of the few keywords in nix. It allows for a file to be read and evaluated. If a directory is passed to <code>import</code>,
+then it will assume <code>&lt;directory&gt;/default.nix</code> was the desired file.</p>
+<pre><code>$ cat data.nix
+{ a = &quot;foo&quot;; b = &quot;bar&quot;; }
+
+nix-repl&gt; :p import ./data.nix
+{ a = &quot;foo&quot;; b = &quot;bar&quot;; }
+
+$ cat expression.nix
+5+2
+
+nix-repl&gt; :p import ./expression.nix
+7
+</code></pre>
+<p>This still extends to functions:</p>
+<pre><code>$ cat function.nix
+{ x, y }: x + y
+
+nix-repl&gt; :p import ./function.nix { x = 2; y = 9; }
+11
+</code></pre>
+<h3 id="imports-for-packages"><a class="header" href="#imports-for-packages">Imports for packages</a></h3>
+<p>In nixpkgs, each package usually has a corresponding
+file associated with the packaging and related concerns of just that package.
+Early in nix's history, <code>import</code> was used to integrate the files with other expressions and allow for greater organization of code.
+However, the import model is quite explicit, and requires users
+to declare the dependencies twice.</p>
+<p>Below is an example expression for <code>openssl</code>:</p>
+<pre><code># pkgs/libraries/openssl/default.nix
+{ lib, stdenv, fetchurl, perl }:
+
+stdenv.mkDerivation {
+  ...
+}
+</code></pre>
+<p>In the <code>import</code> paradigm, the calling site would look:</p>
+<pre><code>  openssl = import ../libraries/openssl {
+    inherit lib stdenv fetchurl perl;
+  };
+</code></pre>
+<p>Obviously this isn't ideal. The dependencies need to be referred to
+three times, once at the call site, as inputs to the expression,
+and then within the expression at the appropriate section.
+The tediousness of passing the values will be solved by <code>callPackage</code>.</p>
+<h2 id="callpackage"><a class="header" href="#callpackage">CallPackage</a></h2>
+<p><code>callPackage</code> is a function which will call a function with the
+appropriate dependencies. The package set will generally expose
+a <code>callPackage</code> function with the current package set already bound.</p>
+<p>A minimal callPackage implementation can be thought of as:</p>
+<pre><code>  # &lt;nixpkgs&gt;/lib/customisation.nix
+  callPackageWith = autoArgs: fn: args:
+  let
+    # if a file is passed, import it
+    f = if lib.isFunction fn then fn else import fn;
+
+    # find what attrs are shared from expression and package set
+    # then override the values by anything passed explicitly through args
+    fargs = builtins.intersectAttrs (lib.functionArgs f) autoArgs // args;
+  in
+    f fargs;
+
+  # &lt;nixpkgs&gt;/pkgs/top-level/all-packages.nix
+  { lib, ... }:
+
+  let
+    self = {
+      ...
+
+      callPackage = lib.callPackageWith self;
+
+      openssl = callPackage ../libraries/openssl { };
+    };
+  in self
+</code></pre>
+<p>With <code>callPackage</code> we only need to explicitly pass an attr set
+if we need to override the default values that would have been
+present in the package set.</p>
+<p>In nixpkgs, <code>callPackage</code> has been extended to include helpful
+package hints, and thus the complexity has grown, but the 
+underlying intuition has remained the same.</p>
 <h1 id="best-practices"><a class="header" href="#best-practices">Best Practices</a></h1>
-<p>TODO: add what are things people should do.</p>
 <h2 id="avoid-excessive-with-usage"><a class="header" href="#avoid-excessive-with-usage">Avoid excessive <code>with</code> usage</a></h2>
 <p>Although <code>with</code> can be useful in small scopes. Doing something such as
 <code>with pkgs;</code> is usually discouraged. This is most dramatic with <code>pkgs</code>,
@@ -576,7 +659,15 @@ is an attr set. This is more accurately represented as:</p>
   ];
 </code></pre>
 <h1 id="building-a-nix-package"><a class="header" href="#building-a-nix-package">Building a Nix Package</a></h1>
-<p><em>Derivations were already introduced, expand on what a &quot;package&quot; is, how to build one using the cli</em></p>
+<p>Building a package for nix can range from trivial to near impossible.
+Generally the difference between the two experiences is
+determined by how many assumptions the build process makes.
+Toolchains which have strong integrity guarantees (e.g. lock files)
+, and allow for offline builds are generally more nix compatible.</p>
+<p>Nix is language and toolchain agnostic. Support for many
+toolchains have been added to nixpkgs, but the nix build
+environment is very constrained so many <toolchain>2nix have
+arisen to try and bridge the gap in expectations.</p>
 <h1 id="simple-c-program"><a class="header" href="#simple-c-program">Simple C program</a></h1>
 <h1 id="stdenv"><a class="header" href="#stdenv">Stdenv</a></h1>
 <p><em>Introduce stdenv</em></p>

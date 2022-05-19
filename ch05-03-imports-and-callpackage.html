@@ -164,12 +164,87 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="imports-and-callpackage"><a class="header" href="#imports-and-callpackage">Imports and callPackage</a></h1>
-<ul>
-<li>trivial import example</li>
-<li>example of import json data</li>
-<li>example of creating a derivation with imports</li>
-<li>example of creating the same derivation, but with callPackage</li>
-</ul>
+<h2 id="import"><a class="header" href="#import">Import</a></h2>
+<p><code>import</code> is one of the few keywords in nix. It allows for a file to be read and evaluated. If a directory is passed to <code>import</code>,
+then it will assume <code>&lt;directory&gt;/default.nix</code> was the desired file.</p>
+<pre><code>$ cat data.nix
+{ a = &quot;foo&quot;; b = &quot;bar&quot;; }
+
+nix-repl&gt; :p import ./data.nix
+{ a = &quot;foo&quot;; b = &quot;bar&quot;; }
+
+$ cat expression.nix
+5+2
+
+nix-repl&gt; :p import ./expression.nix
+7
+</code></pre>
+<p>This still extends to functions:</p>
+<pre><code>$ cat function.nix
+{ x, y }: x + y
+
+nix-repl&gt; :p import ./function.nix { x = 2; y = 9; }
+11
+</code></pre>
+<h3 id="imports-for-packages"><a class="header" href="#imports-for-packages">Imports for packages</a></h3>
+<p>In nixpkgs, each package usually has a corresponding
+file associated with the packaging and related concerns of just that package.
+Early in nix's history, <code>import</code> was used to integrate the files with other expressions and allow for greater organization of code.
+However, the import model is quite explicit, and requires users
+to declare the dependencies twice.</p>
+<p>Below is an example expression for <code>openssl</code>:</p>
+<pre><code># pkgs/libraries/openssl/default.nix
+{ lib, stdenv, fetchurl, perl }:
+
+stdenv.mkDerivation {
+  ...
+}
+</code></pre>
+<p>In the <code>import</code> paradigm, the calling site would look:</p>
+<pre><code>  openssl = import ../libraries/openssl {
+    inherit lib stdenv fetchurl perl;
+  };
+</code></pre>
+<p>Obviously this isn't ideal. The dependencies need to be referred to
+three times, once at the call site, as inputs to the expression,
+and then within the expression at the appropriate section.
+The tediousness of passing the values will be solved by <code>callPackage</code>.</p>
+<h2 id="callpackage"><a class="header" href="#callpackage">CallPackage</a></h2>
+<p><code>callPackage</code> is a function which will call a function with the
+appropriate dependencies. The package set will generally expose
+a <code>callPackage</code> function with the current package set already bound.</p>
+<p>A minimal callPackage implementation can be thought of as:</p>
+<pre><code>  # &lt;nixpkgs&gt;/lib/customisation.nix
+  callPackageWith = autoArgs: fn: args:
+  let
+    # if a file is passed, import it
+    f = if lib.isFunction fn then fn else import fn;
+
+    # find what attrs are shared from expression and package set
+    # then override the values by anything passed explicitly through args
+    fargs = builtins.intersectAttrs (lib.functionArgs f) autoArgs // args;
+  in
+    f fargs;
+
+  # &lt;nixpkgs&gt;/pkgs/top-level/all-packages.nix
+  { lib, ... }:
+
+  let
+    self = {
+      ...
+
+      callPackage = lib.callPackageWith self;
+
+      openssl = callPackage ../libraries/openssl { };
+    };
+  in self
+</code></pre>
+<p>With <code>callPackage</code> we only need to explicitly pass an attr set
+if we need to override the default values that would have been
+present in the package set.</p>
+<p>In nixpkgs, <code>callPackage</code> has been extended to include helpful
+package hints, and thus the complexity has grown, but the 
+underlying intuition has remained the same.</p>
 
                     </main>
 
