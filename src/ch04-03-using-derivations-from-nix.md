@@ -16,7 +16,7 @@ to be quite transparent. For example:
 $ nix-build -E 'with import <nixpkgs> { }; pkgs.runCommand "greet.sh" {} "${pkgs.hello}/bin/hello -g \"Hello $USER!\""'
 ```
 
-Will create a `greet.sh` script which will create the user.
+Will create a `greet.sh` script which will greet the user.
 We can see from the contents of the resulting file that
 `pkgs.hello` was substituted for the realised output path.
 This allows for us to not worry about what the unique name
