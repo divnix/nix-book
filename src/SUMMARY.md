@@ -2,7 +2,7 @@
 
 [The Nix Package Manager](./ch00-00-the-nix-package-manager.md)
 
-[Forward](./ch01-00-forward.md)
+[Foreword](./ch01-00-foreword.md)
 
 [Introduction](./ch02-00-introduction.md)
 
