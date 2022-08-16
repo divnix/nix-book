@@ -1,9 +1,8 @@
 # The Nix Package Manager
 
-*Quickly Explain nix package manager*
+*by Jonathan Ringer and Tim Deherra*
 
-*Explain nix ecosystem*
-  - nix (the language)
-  - nix (the package manager)
-  - nixpkgs (the package repository)
-  - NixOS (the Operating System)
+This book assumes usage of the nix 3.0 cli. Which can be enabled in nix 2.4+
+[following these instructions](https://nixos.wiki/wiki/Flakes#Enable_flakes).
+
+This book is available on the web at https://book.divnix.com/.
