@@ -6,8 +6,7 @@
 
 [Introduction](./ch02-00-introduction.md)
 
-- [Getting Started](./ch03-00-getting-started.md)
-  - [Installation](./ch03-01-installation.md)
+- [Installation](./ch03-00-installation.md)
 
 - [Derivations](./ch04-00-derivations.md)
   - [Create a Derivation](./ch04-01-create-a-derivation.md)
