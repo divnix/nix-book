@@ -8,5 +8,5 @@ Toolchains which have strong integrity guarantees (e.g. lock files)
 
 Nix is language and toolchain agnostic. Support for many
 toolchains have been added to nixpkgs, but the nix build
-environment is very constrained so many <toolchain>2nix have
+environment is very constrained so many `<toolchain>2nix` tools have
 arisen to try and bridge the gap in expectations.
