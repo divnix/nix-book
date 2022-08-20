@@ -13,9 +13,9 @@ provide a more recent account of nix with more of a focus on giving the user
 intuition around what nix is doing rather than a deep understanding like nix-pills.
 
 The goal is not to replace any existing nix guides or documentation, but rather
-provide a good starting place for new users. Much of the motivation for writing
-this is to provide a "nix equilavent of the [rust-lang book](https://doc.rust-lang.org/book/)",
-where there is one resource, which can be read end-to-end in an after,
+provide a good starting place for new users. Motivation for writing
+this is to provide a "nix equilavent of the [rust-lang book](https://doc.rust-lang.org/book/)".
+Where there is one resource which can be read end-to-end in an afternoon and
 able to equip the reader with the knowledge necessary
 to thrive in the nix ecosystem.
 

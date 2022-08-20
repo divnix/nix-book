@@ -2,11 +2,11 @@
 
 # The Nix Package Manager
 
-The Nix is a package manager which focuses on
+Nix is a package manager which focuses on
 caputuring all inputs which contribute to building software.
 The result of factoring all of the information about building
 the software is called a derivation. This aggregated information includes where
-the source code is pull, configuration flags, patches,
+the source code is pulled, configuration flags, patches,
 dependencies, build steps, installation steps, and many other potential inputs.
 
 This information is aggregated through hashing, and allows nix to
@@ -21,16 +21,13 @@ a single variant of a piece of software.
 
 There's roughly four layers of abstractions in the official nix ecosystem, these are:
 
-- Nix(-lang)* - The nix language
+- Nix - The domain-specifc language used to write nix expressions
 - Nix - The package manager
 - Nixpkgs - The package repository
 - NixOS - A linux distribution built upon nixpkgs
 
 All of these topic will be discussed in greater detail in later sections, but a 
 quick summary is provided below.
-
-*: Generally the distinction between the nix language and package manager is done
-by context.
 
 ## The Nix Language
 
