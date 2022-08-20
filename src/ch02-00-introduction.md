@@ -17,17 +17,56 @@ nix does not adhere to the traditional [File Hierarchical System(FHS)](https://e
 but it also means that it's not limited to FHS's restriction of only having
 a single variant of a piece of software.
 
+# Who is Nix For
+
+## Teams of Developers
+
+Development needs to have similar tooling across every individual. Having divergent
+development environments and productions environments is a major cause of regressions
+in software development. Nix can help mitigate this by allowing development environments
+to be version controlled and maintained along with a project.
+
+## DevOps (Operations)
+
+Nix allows you to percisely describe the software you intended to use. Nix packages
+are defined by their dependencies, so they inherently retain their SBOM (Software Bill of Materials)
+by default. By leveraging NixOS modules, one can also create configurable services and compose
+it into coherent systems. The combination of Nix + NixOS allows you to have delcarative configuration
+of both services and sytems.
+
+## System Administrators (home to enterprise)
+
+Ever have to maintain a few systems to a few hundred systems? The ability to version control and manipulate
+systems-as-code enables a new paradigm of system configuration management. Atomically apply or rollback
+system updates for each system. Nixpkgs can also be freely extended to include personal or private additions
+of software; this allows you to leverage all other Nix tooling as though your application-specific software
+was a first-class citizen.
+
+Also, Nix largely invalidates the need for docker. However, nix can also be used to produce docker images
+if there is a downstream technology which consumes oci images as an interface (E.g. kubernetes).
+
+## Power Users
+
+Do you have incredible specific or opinated environments? Nix allows you to declaratively create
+project (flakes), user (home-manager), or system (NixOS) environments with the exact software
+and configuration you desired. Whether you're building software or ricing a desktop, nix will allow
+you to version control and specify your configuration exactly how you intended.
+
 # The Nix Ecosystem
 
 There's roughly four layers of abstractions in the official nix ecosystem, these are:
 
 - Nix - The domain-specifc language used to write nix expressions
 - Nix - The package manager
-- Nixpkgs - The package repository
+- Nixpkgs - The official Nix package repository
 - NixOS - A linux distribution built upon nixpkgs
 
-All of these topic will be discussed in greater detail in later sections, but a 
-quick summary is provided below.
+There are also a few unofficial projects which are commonly used within the community:
+- [Home-manager](https://github.com/nix-community/home-manager) - NixOS-like user configuration for linux or MacOS built upon nixpkgs
+- [Nix-darwin](https://github.com/LnL7/nix-darwin) - NixOS-like configuration, but for MacOS
+
+All of these topics will be discussed in greater detail in later sections, but a 
+quick summary of official projects are provided below.
 
 ## The Nix Language
 
@@ -43,7 +82,7 @@ graph which can be used to build software.
 
 ## Nix the Package Manager
 
-The Nix Package Manager began it's life as the [PhD thesis work](https://edolstra.github.io/pubs/phd-thesis.pdf)
+The Nix Package Manager began its life as the [PhD thesis work](https://edolstra.github.io/pubs/phd-thesis.pdf)
 of Eelco Dolstra. The goal was to bring discipline to the software landscape. Similar to
 how structured programming helped tame the complexity of goto through introducing constructs such
 as loops and logic flow; so too does nix attempt to tame the chaos of package management
