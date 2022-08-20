@@ -165,11 +165,11 @@
                     <main>
                         <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
 <h1 id="the-nix-package-manager"><a class="header" href="#the-nix-package-manager">The Nix Package Manager</a></h1>
-<p>The Nix is a package manager which focuses on
+<p>Nix is a package manager which focuses on
 caputuring all inputs which contribute to building software.
 The result of factoring all of the information about building
 the software is called a derivation. This aggregated information includes where
-the source code is pull, configuration flags, patches,
+the source code is pulled, configuration flags, patches,
 dependencies, build steps, installation steps, and many other potential inputs.</p>
 <p>This information is aggregated through hashing, and allows nix to
 describe and reference the exact software which is intended to use.
@@ -181,15 +181,13 @@ a single variant of a piece of software.</p>
 <h1 id="the-nix-ecosystem"><a class="header" href="#the-nix-ecosystem">The Nix Ecosystem</a></h1>
 <p>There's roughly four layers of abstractions in the official nix ecosystem, these are:</p>
 <ul>
-<li>Nix(-lang)* - The nix language</li>
+<li>Nix - The domain-specifc language used to write nix expressions</li>
 <li>Nix - The package manager</li>
 <li>Nixpkgs - The package repository</li>
 <li>NixOS - A linux distribution built upon nixpkgs</li>
 </ul>
 <p>All of these topic will be discussed in greater detail in later sections, but a 
 quick summary is provided below.</p>
-<p>*: Generally the distinction between the nix language and package manager is done
-by context.</p>
 <h2 id="the-nix-language"><a class="header" href="#the-nix-language">The Nix Language</a></h2>
 <p>The Nix language is a Domain-Specific Language (DSL) which is designed to
 handle package configuration. Nix can be thought of <a href="https://en.wikipedia.org/wiki/JSON">JSON</a> + functions +

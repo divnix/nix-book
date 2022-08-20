@@ -182,19 +182,19 @@ some prior knowledge of nix. This book hopes to
 provide a more recent account of nix with more of a focus on giving the user
 intuition around what nix is doing rather than a deep understanding like nix-pills.</p>
 <p>The goal is not to replace any existing nix guides or documentation, but rather
-provide a good starting place for new users. Much of the motivation for writing
-this is to provide a &quot;nix equilavent of the <a href="https://doc.rust-lang.org/book/">rust-lang book</a>&quot;,
-where there is one resource, which can be read end-to-end in an after,
+provide a good starting place for new users. Motivation for writing
+this is to provide a &quot;nix equilavent of the <a href="https://doc.rust-lang.org/book/">rust-lang book</a>&quot;.
+Where there is one resource which can be read end-to-end in an afternoon and
 able to equip the reader with the knowledge necessary
 to thrive in the nix ecosystem.</p>
 <p>-- Jonathan Ringer</p>
 <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
 <h1 id="the-nix-package-manager-1"><a class="header" href="#the-nix-package-manager-1">The Nix Package Manager</a></h1>
-<p>The Nix is a package manager which focuses on
+<p>Nix is a package manager which focuses on
 caputuring all inputs which contribute to building software.
 The result of factoring all of the information about building
 the software is called a derivation. This aggregated information includes where
-the source code is pull, configuration flags, patches,
+the source code is pulled, configuration flags, patches,
 dependencies, build steps, installation steps, and many other potential inputs.</p>
 <p>This information is aggregated through hashing, and allows nix to
 describe and reference the exact software which is intended to use.
@@ -206,15 +206,13 @@ a single variant of a piece of software.</p>
 <h1 id="the-nix-ecosystem"><a class="header" href="#the-nix-ecosystem">The Nix Ecosystem</a></h1>
 <p>There's roughly four layers of abstractions in the official nix ecosystem, these are:</p>
 <ul>
-<li>Nix(-lang)* - The nix language</li>
+<li>Nix - The domain-specifc language used to write nix expressions</li>
 <li>Nix - The package manager</li>
 <li>Nixpkgs - The package repository</li>
 <li>NixOS - A linux distribution built upon nixpkgs</li>
 </ul>
 <p>All of these topic will be discussed in greater detail in later sections, but a 
 quick summary is provided below.</p>
-<p>*: Generally the distinction between the nix language and package manager is done
-by context.</p>
 <h2 id="the-nix-language"><a class="header" href="#the-nix-language">The Nix Language</a></h2>
 <p>The Nix language is a Domain-Specific Language (DSL) which is designed to
 handle package configuration. Nix can be thought of <a href="https://en.wikipedia.org/wiki/JSON">JSON</a> + functions +
