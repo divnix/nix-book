@@ -29,3 +29,4 @@
   - [Building Packages for Other Toolchains](./ch06-06-building-packages-for-other-toolchains.md)
   - [Building Packages for Other Languages](./ch06-07-building-packages-for-other-languages.md)
   - [Patching](./ch06-08-patching.md)
+  - [Multiple Outputs](./ch06-09-multiple-outputs.md)
