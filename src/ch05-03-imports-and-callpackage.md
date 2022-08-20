@@ -67,7 +67,11 @@ a `callPackage` function with the current package set already bound.
 A minimal callPackage implementation can be thought of as:
 ```
   # <nixpkgs>/lib/customisation.nix
+  # callPackageWith :: Attr Set -> (Attr Set -> drv) -> Attr Set -> drv
   callPackageWith = autoArgs: fn: args:
+  # autoArgs - Attr set of "defaults", for nixpkgs this would be all top-level packages
+  # fn       - A nix expression which uses an attr set as in input.
+  # args     - Overrides to the defaults in autoArgs
   let
     # if a file is passed, import it
     f = if lib.isFunction fn then fn else import fn;
@@ -76,13 +80,16 @@ A minimal callPackage implementation can be thought of as:
     # then override the values by anything passed explicitly through args
     fargs = builtins.intersectAttrs (lib.functionArgs f) autoArgs // args;
   in
-    f fargs;
+    f fargs; # With nix, creation of a derivation is just function application
+```
 
+Usage of `callPackage` would look something like this:
+```
   # <nixpkgs>/pkgs/top-level/all-packages.nix
   { lib, ... }:
 
   let
-    self = {
+    self = with self; {
       ...
 
       callPackage = lib.callPackageWith self;
@@ -99,3 +106,6 @@ present in the package set.
 In nixpkgs, `callPackage` has been extended to include helpful
 package hints, and thus the complexity has grown, but the 
 underlying intuition has remained the same.
+
+In javascript, `callPackage` would be an example of a curried function,
+where there's an implicit package set bound to it.

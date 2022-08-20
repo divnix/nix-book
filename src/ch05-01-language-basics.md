@@ -2,7 +2,7 @@
 
 ## Primitive Values
 
-These mostly similar to JSON:
+These values are mostly similar to JSON:
 
 | Type | Description | Example
 |---|---|---|
@@ -59,7 +59,7 @@ of an attribute is done through dot-notation `<set>.<key>`.
 5
 ```
 
-You will commonly see empty att sets in nixpkgs, and example being:
+You will commonly see empty attr sets in nixpkgs, an example being:
 ```
   hello = callPackage ../applications/misc/hello { };
 ```
@@ -71,7 +71,7 @@ set to valid values which then nix can later realise into a build. Promotion
 from an attr set to derivation is facilitated through the `builtins.derivation`
 function. However directly calling the builtin is highly discouraged within
 nixpkgs. Instead people are encouraged to use stdenv.mkDerivation and other
-establed mkDerivation helpers to achieve their package goals.
+established builders which provide many good defaults to achieve their packaging goals.
 
 ## If / Else logic
 
@@ -144,6 +144,6 @@ requested. In practice this means limiting the scope of an action from
 by the nix expressions.
 
 Although laziness isn't a hard requirement for nix to work. The purity
-model of nix makes laziness more of symptom than an explicit design goal.
+model of nix makes laziness more a symptom rather than an explicit design goal.
 However, It does enable many implicit benefits such as [memoization](https://en.wikipedia.org/wiki/Memoization).
 
