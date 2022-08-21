@@ -1,4 +1,4 @@
-# Foreward
+# Preface
 
 My journey to learn nix was only possible by my extreme desire to master it.
 The path was anything but easy and predictable. And it is still a considerable
