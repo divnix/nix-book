@@ -54,9 +54,13 @@ pairs which are separated with semicolons `;`, the attr set is enclosed with cur
 of an attribute is done through dot-notation `<set>.<key>`.
 
 ```
-> a = { foo = "bar"; count = 5; flags = ''-g -O3''; }
-> a.count
+nix-repl> a = { foo = "bar"; count = 5; flags = ''-g -O3''; }
+nix-repl> a.count
 5
+
+# Shorthand for nested attribute sets
+nix-repl> :p { foo.bar.baz = 1; foo.bar.buzz = 2; }
+{ foo = { bar = { baz = 1; buzz = 2; }; }; }
 ```
 
 You will commonly see empty attr sets in nixpkgs, an example being:
