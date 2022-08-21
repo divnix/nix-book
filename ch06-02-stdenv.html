@@ -164,9 +164,25 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="stdenv"><a class="header" href="#stdenv">Stdenv</a></h1>
-<p><em>Introduce stdenv</em></p>
+<p><code>stdenv</code> provides a foundation for building C/C++ software with nixpkgs. It includes, but is not limited to
+containing tools such as: a c compiler and related tools, GNU coreutils, GNU awk, GNU sed, findutils, strip, bash, GNUmake, bzip2, gzip,
+and many more tools. Stdenv also provides a default &quot;builder.sh&quot; script which will perform the build of a package. The default builder script
+is comprised of many smaller &quot;phases&quot; which package maintainers can alter slightly as needed. The goal of <code>stdenv</code> is to enable most C/C++ + <code>Makefile</code> workflows; in theory, if a software
+package has these installation:</p>
+<pre><code>./configure # configurePhase, optional
+make # buildPhase
+make install # installPhase
+</code></pre>
+<p>Then the only necessary changes for it to work with <code>stdenv.mkDerivation</code> would be the inclusion of
+<code>installFlags = [ &quot;PREFIX=$(out)&quot; ];</code> to communicate where the package should be installed with nix.</p>
+<h2 id="unique-qualities-of-nixpkgs-stdenv"><a class="header" href="#unique-qualities-of-nixpkgs-stdenv">Unique qualities of Nixpkgs' Stdenv</a></h2>
+<h3 id="wrapped-c-compiler"><a class="header" href="#wrapped-c-compiler">Wrapped C Compiler</a></h3>
+<p><code>stdenv</code> exposes a wrapped compiler to help communicate nix-specific to the compiler without
+having to rely on the upstream maintainer to expose such allowances in configuration. For example,
+let's assume that a package doesn't officially support MacOS, so all testing and building
+occurs with Linux + GCC. Trying to package this for MacOS might be difficult because the logic
+may call <code>gcc</code> directly, and assume</p>
 <ul>
-<li>Includes c toolchain (gcc + binutils on linux), coreutils, gawk, sed, findutils, strip, bash, make, bzip2, gzip</li>
 <li>Nix differences
 <ul>
 <li>Wrapped compiler</li>

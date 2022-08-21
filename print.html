@@ -169,7 +169,8 @@
 <p><em>by Jonathan Ringer and Tim Deherra</em></p>
 <p>This book assumes usage of the nix 3.0 cli. Which can be enabled in nix 2.4+
 <a href="https://nixos.wiki/wiki/Flakes#Enable_flakes">following these instructions</a>.</p>
-<p>This book is available on the web at https://book.divnix.com/.</p>
+<p>This book is available on the web at <a href="https://book.divnix.com/">https://book.divnix.com/</a>.
+For changes to the book, please see the <a href="https://github.com/divnix/nix-book">https://github.com/divnix/nix-book</a>.</p>
 <h1 id="preface"><a class="header" href="#preface">Preface</a></h1>
 <p>My journey to learn nix was only possible by my extreme desire to master it.
 The path was anything but easy and predictable. And it is still a considerable
@@ -203,16 +204,46 @@ do not collide with the assumptions of a host system. This also means that
 nix does not adhere to the traditional <a href="https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard">File Hierarchical System(FHS)</a>
 but it also means that it's not limited to FHS's restriction of only having
 a single variant of a piece of software.</p>
+<h1 id="who-is-nix-for"><a class="header" href="#who-is-nix-for">Who is Nix For</a></h1>
+<h2 id="teams-of-developers"><a class="header" href="#teams-of-developers">Teams of Developers</a></h2>
+<p>Development needs to have similar tooling across every individual. Having divergent
+development environments and productions environments is a major cause of regressions
+in software development. Nix can help mitigate this by allowing development environments
+to be version controlled and maintained along with a project.</p>
+<h2 id="devops-operations"><a class="header" href="#devops-operations">DevOps (Operations)</a></h2>
+<p>Nix allows you to percisely describe the software you intended to use. Nix packages
+are defined by their dependencies, so they inherently retain their SBOM (Software Bill of Materials)
+by default. By leveraging NixOS modules, one can also create configurable services and compose
+it into coherent systems. The combination of Nix + NixOS allows you to have delcarative configuration
+of both services and sytems.</p>
+<h2 id="system-administrators-home-to-enterprise"><a class="header" href="#system-administrators-home-to-enterprise">System Administrators (home to enterprise)</a></h2>
+<p>Ever have to maintain a few systems to a few hundred systems? The ability to version control and manipulate
+systems-as-code enables a new paradigm of system configuration management. Atomically apply or rollback
+system updates for each system. Nixpkgs can also be freely extended to include personal or private additions
+of software; this allows you to leverage all other Nix tooling as though your application-specific software
+was a first-class citizen.</p>
+<p>Also, Nix largely invalidates the need for docker. However, nix can also be used to produce docker images
+if there is a downstream technology which consumes oci images as an interface (E.g. kubernetes).</p>
+<h2 id="power-users"><a class="header" href="#power-users">Power Users</a></h2>
+<p>Do you have incredible specific or opinated environments? Nix allows you to declaratively create
+project (flakes), user (home-manager), or system (NixOS) environments with the exact software
+and configuration you desired. Whether you're building software or ricing a desktop, nix will allow
+you to version control and specify your configuration exactly how you intended.</p>
 <h1 id="the-nix-ecosystem"><a class="header" href="#the-nix-ecosystem">The Nix Ecosystem</a></h1>
 <p>There's roughly four layers of abstractions in the official nix ecosystem, these are:</p>
 <ul>
 <li>Nix - The domain-specifc language used to write nix expressions</li>
 <li>Nix - The package manager</li>
-<li>Nixpkgs - The package repository</li>
+<li>Nixpkgs - The official Nix package repository</li>
 <li>NixOS - A linux distribution built upon nixpkgs</li>
 </ul>
-<p>All of these topic will be discussed in greater detail in later sections, but a 
-quick summary is provided below.</p>
+<p>There are also a few unofficial projects which are commonly used within the community:</p>
+<ul>
+<li><a href="https://github.com/nix-community/home-manager">Home-manager</a> - NixOS-like user configuration for linux or MacOS built upon nixpkgs</li>
+<li><a href="https://github.com/LnL7/nix-darwin">Nix-darwin</a> - NixOS-like configuration, but for MacOS</li>
+</ul>
+<p>All of these topics will be discussed in greater detail in later sections, but a 
+quick summary of official projects are provided below.</p>
 <h2 id="the-nix-language"><a class="header" href="#the-nix-language">The Nix Language</a></h2>
 <p>The Nix language is a Domain-Specific Language (DSL) which is designed to
 handle package configuration. Nix can be thought of <a href="https://en.wikipedia.org/wiki/JSON">JSON</a> + functions +
@@ -224,7 +255,7 @@ no types. What is left is a small functional-oriented programming language. Afte
 Nix's goal is to take a few inputs such as a system platform, and produce a build
 graph which can be used to build software.</p>
 <h2 id="nix-the-package-manager"><a class="header" href="#nix-the-package-manager">Nix the Package Manager</a></h2>
-<p>The Nix Package Manager began it's life as the <a href="https://edolstra.github.io/pubs/phd-thesis.pdf">PhD thesis work</a>
+<p>The Nix Package Manager began its life as the <a href="https://edolstra.github.io/pubs/phd-thesis.pdf">PhD thesis work</a>
 of Eelco Dolstra. The goal was to bring discipline to the software landscape. Similar to
 how structured programming helped tame the complexity of goto through introducing constructs such
 as loops and logic flow; so too does nix attempt to tame the chaos of package management
@@ -761,6 +792,15 @@ stdenv.mkDerivation {
 }
 </code></pre>
 <h1 id="common-mistakes"><a class="header" href="#common-mistakes">Common Mistakes</a></h1>
+<h2 id="functions-1"><a class="header" href="#functions-1">Functions</a></h2>
+<p>The space after <code>:</code> is required. Without a space, nix will
+parse the value as an url, and represent it as a string</p>
+<pre><code>nix-repl&gt; :t x: x
+a function
+
+nix-repl&gt; :t x:x
+a string
+</code></pre>
 <h2 id="lists-1"><a class="header" href="#lists-1">Lists</a></h2>
 <p>Functions and lists use whitespace to do funcation application,
 however, list element delimination takes precedence over function application.</p>
@@ -904,9 +944,25 @@ $ ./result/bin/hello_nix
 Hello from Nix!
 </code></pre>
 <h1 id="stdenv"><a class="header" href="#stdenv">Stdenv</a></h1>
-<p><em>Introduce stdenv</em></p>
+<p><code>stdenv</code> provides a foundation for building C/C++ software with nixpkgs. It includes, but is not limited to
+containing tools such as: a c compiler and related tools, GNU coreutils, GNU awk, GNU sed, findutils, strip, bash, GNUmake, bzip2, gzip,
+and many more tools. Stdenv also provides a default &quot;builder.sh&quot; script which will perform the build of a package. The default builder script
+is comprised of many smaller &quot;phases&quot; which package maintainers can alter slightly as needed. The goal of <code>stdenv</code> is to enable most C/C++ + <code>Makefile</code> workflows; in theory, if a software
+package has these installation:</p>
+<pre><code>./configure # configurePhase, optional
+make # buildPhase
+make install # installPhase
+</code></pre>
+<p>Then the only necessary changes for it to work with <code>stdenv.mkDerivation</code> would be the inclusion of
+<code>installFlags = [ &quot;PREFIX=$(out)&quot; ];</code> to communicate where the package should be installed with nix.</p>
+<h2 id="unique-qualities-of-nixpkgs-stdenv"><a class="header" href="#unique-qualities-of-nixpkgs-stdenv">Unique qualities of Nixpkgs' Stdenv</a></h2>
+<h3 id="wrapped-c-compiler"><a class="header" href="#wrapped-c-compiler">Wrapped C Compiler</a></h3>
+<p><code>stdenv</code> exposes a wrapped compiler to help communicate nix-specific to the compiler without
+having to rely on the upstream maintainer to expose such allowances in configuration. For example,
+let's assume that a package doesn't officially support MacOS, so all testing and building
+occurs with Linux + GCC. Trying to package this for MacOS might be difficult because the logic
+may call <code>gcc</code> directly, and assume</p>
 <ul>
-<li>Includes c toolchain (gcc + binutils on linux), coreutils, gawk, sed, findutils, strip, bash, make, bzip2, gzip</li>
 <li>Nix differences
 <ul>
 <li>Wrapped compiler</li>

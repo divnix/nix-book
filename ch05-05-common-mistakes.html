@@ -164,6 +164,15 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="common-mistakes"><a class="header" href="#common-mistakes">Common Mistakes</a></h1>
+<h2 id="functions"><a class="header" href="#functions">Functions</a></h2>
+<p>The space after <code>:</code> is required. Without a space, nix will
+parse the value as an url, and represent it as a string</p>
+<pre><code>nix-repl&gt; :t x: x
+a function
+
+nix-repl&gt; :t x:x
+a string
+</code></pre>
 <h2 id="lists"><a class="header" href="#lists">Lists</a></h2>
 <p>Functions and lists use whitespace to do funcation application,
 however, list element delimination takes precedence over function application.</p>
