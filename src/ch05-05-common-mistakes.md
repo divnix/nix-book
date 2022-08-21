@@ -1,5 +1,18 @@
 # Common Mistakes
 
+## Functions
+
+The space after `:` is required. Without a space, nix will
+parse the value as an url, and represent it as a string
+
+```
+nix-repl> :t x: x
+a function
+
+nix-repl> :t x:x
+a string
+```
+
 ## Lists
 
 Functions and lists use whitespace to do funcation application,
