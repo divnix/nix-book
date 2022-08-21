@@ -532,9 +532,13 @@ keys are always ordered, so that the order doesn't influence how a derivation wi
 values do not need to be of the same type. Attr sets are constructed using an <code>=</code> sign which denotes key value
 pairs which are separated with semicolons <code>;</code>, the attr set is enclosed with curly braces <code>{ }</code>. Selection
 of an attribute is done through dot-notation <code>&lt;set&gt;.&lt;key&gt;</code>.</p>
-<pre><code>&gt; a = { foo = &quot;bar&quot;; count = 5; flags = ''-g -O3''; }
-&gt; a.count
+<pre><code>nix-repl&gt; a = { foo = &quot;bar&quot;; count = 5; flags = ''-g -O3''; }
+nix-repl&gt; a.count
 5
+
+# Shorthand for nested attribute sets
+nix-repl&gt; :p { foo.bar.baz = 1; foo.bar.buzz = 2; }
+{ foo = { bar = { baz = 1; buzz = 2; }; }; }
 </code></pre>
 <p>You will commonly see empty attr sets in nixpkgs, an example being:</p>
 <pre><code>  hello = callPackage ../applications/misc/hello { };
