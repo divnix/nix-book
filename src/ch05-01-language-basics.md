@@ -36,6 +36,20 @@ Example usage of lines:
 
 Here, we have postPatch being assigned a series of commands to be ran as part of a build.
 
+Another quality of lines, is that all shared leading whitespace will be truncated.
+This allows for the the lines blocks to be adjusted to the indention of the parent nix expression
+without influencing the contents of the string.
+
+```
+$ cat lines.nix
+''
+  2 spaces
+   3 spaces
+    4 spaces
+''
+$ nix eval -f lines.nix
+"2 spaces\n 3 spaces\n  4 spaces\n"
+```
 
 ## Lists
 
