@@ -4,12 +4,14 @@
 
 These values are mostly similar to JSON:
 
-| Type | Description | Example
-|---|---|---|
-| integer | Whole number | 1 |
-| float | Floating point number | 1.054 |
-| string | UTF-8 string | "hello!" |
-| path | File or url | ./default.nix |
+| Type          | Description              | Example
+|---------------|--------------------------|----------------------|
+| integer       | Whole number             | `1`                  |
+| float         | Floating point number    | `1.054`              |
+| string        | UTF-8 string             | `"hello!"`           |
+| path          | File or url              | `./default.nix`      |
+| list          | Multi-type list          | `[ "hello" 1 ]`      |
+| attribute set | Key-value structure      | `{ key = "value"; }` |
 
 *NOTE*: Paths are special. They will be resolved relative to the file.
 They must start with a "." or "/", similar to how they would be expressed in a shell.
@@ -111,6 +113,36 @@ let expressions work similarly to how they work in Haskell.
     url = srcUrl;
     sha256 = "...";
   };
+```
+
+## Inherit statements
+
+An inherit statement can be used to _pull_ values out of a parent scope
+into the current one. Values are whitespace separated and the statement
+ends with a `;`. They are valid only in `let` blocks and inside
+attribute sets.
+
+```nix
+let
+  name = "package";
+in
+{ inherit name; } == { name = "package"; }
+```
+
+If an attribute set in parenthesis follows immediately after the `inherit`
+keyword, then values can also be pulled directly out of the given set.
+
+In a `let` block, inherit statements can also come before the values they
+reference, so long as they are in the same block.
+
+```nix
+let
+  inherit (pkgs) zlib;
+
+  nixpkgs = builtins.getFlake "nixpkgs";
+  pkgs = import nixpkgs { };
+in
+pkgs.zlib == zlib
 ```
   
 ## With expressions
