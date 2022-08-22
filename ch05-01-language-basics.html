@@ -191,6 +191,18 @@ the &quot;lines&quot; construct. &quot;lines&quot; are denoted by two single quo
   '';
 </code></pre>
 <p>Here, we have postPatch being assigned a series of commands to be ran as part of a build.</p>
+<p>Another quality of lines, is that all shared leading whitespace will be truncated.
+This allows for the the lines blocks to be adjusted to the indention of the parent nix expression
+without influencing the contents of the string.</p>
+<pre><code>$ cat lines.nix
+''
+  2 spaces
+   3 spaces
+    4 spaces
+''
+$ nix eval -f lines.nix
+&quot;2 spaces\n 3 spaces\n  4 spaces\n&quot;
+</code></pre>
 <h2 id="lists"><a class="header" href="#lists">Lists</a></h2>
 <p>Lists work similarly to most other languages, but are whitespace delimited. <code>[ 1 2 ]</code> is an
 array with elements <code>1</code> and <code>2</code>.</p>
