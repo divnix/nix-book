@@ -12,12 +12,11 @@ These values are mostly similar to JSON:
 | path | File or url | ./default.nix |
 
 *NOTE*: Paths are special. They will be resolved relative to the file.
-They must start with a "." or "/", similar to how they would be expressed in a shell.
+The value must contain a "/" to be considered a path, however, 
+it's common to construct the value starting with "." to avoid confusion
+(e.g. ./foo/bar vs foo/bar).
 If a path is referenced as part of a package, that path will be added to the
 nix store, and all references to that path will be substituted with the nix store path.
-
-*NOTE*: If a path to a directory is passed, but a file was expected; then nix will look
-for a `default.nix` located in that directory, and will target that.
 
 ## Strings
 
