@@ -102,6 +102,9 @@ how to build firefox and all of it's dependencies down to the C compiler.
 This allows for a great deal of freedom in how nix is leveraged, and nix can be used on any Linux distribution and MacOS as
 first class supported OS's, and to a much lesser degree on many other UNIX-like OS's.
 
+Nixpkgs is also supported by [Hydra](https://hydra.nixos.org/), which provides
+pre-built binaries of libre software for Linux and MacOS.
+
 ## NixOS
 
 NixOS is a non-FHS Linux distribution which leverages nixpkgs to provide a wealth
