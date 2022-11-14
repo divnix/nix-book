@@ -3,7 +3,7 @@
 Derivations are the defining feature of nix. Derivations attempt to capture everything
 that it would take to build a package. This includes, but is not limited to: source code,
 dependencies, build flags, build and installation steps, tests, and environment variables.
-The culmination of all direct and transitive build depdencies
+The culmination of all direct and transitive build dependencies
 is commonly refered to as the derivations's "build closure". More dependencies that a
 package refers to, more package will need to be created in order to attempt a
 build. Generally, dependencies of a derivation are other derivations.
