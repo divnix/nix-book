@@ -9,13 +9,13 @@ then it will assume `<directory>/default.nix` was the desired file.
 $ cat data.nix
 { a = "foo"; b = "bar"; }
 
-nix-repl> :p import ./data.nix
+nix-repl> import ./data.nix
 { a = "foo"; b = "bar"; }
 
 $ cat expression.nix
 5+2
 
-nix-repl> :p import ./expression.nix
+nix-repl> import ./expression.nix
 7
 ```
 
@@ -24,7 +24,7 @@ This still extends to functions:
 $ cat function.nix
 { x, y }: x + y
 
-nix-repl> :p import ./function.nix { x = 2; y = 9; }
+nix-repl> import ./function.nix { x = 2; y = 9; }
 11
 ```
 

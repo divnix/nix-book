@@ -72,8 +72,8 @@ nix-repl> a.count
 5
 
 # Shorthand for nested attribute sets
-nix-repl> :p { foo.bar.baz = 1; foo.bar.buzz = 2; }
-{ foo = { bar = { baz = 1; buzz = 2; }; }; }
+nix-repl> { foo.bar.baz = 1; foo.bar.buzz = 2; } == { foo = { bar = { baz = 1; buzz = 2; }; }; }
+true
 ```
 
 You will commonly see empty attr sets in nixpkgs, an example being:
