@@ -35,7 +35,7 @@ The `nix-build` and `nix build` commands will perform both instantiation and rea
 These are the most common commands used when iterating on packages. One could also do:
 
 ```
-$ nix-buid '<nixpkgs>' -A hello
+$ nix-build '<nixpkgs>' -A hello
 # these are the same, nix build is just much more concise
 $ nix-store --realise $(nix-instantiate '<nixpkgs>' -A hello)
 ```
