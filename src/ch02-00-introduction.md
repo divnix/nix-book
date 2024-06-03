@@ -28,11 +28,11 @@ to be version controlled and maintained along with a project.
 
 ## DevOps (Operations)
 
-Nix allows you to percisely describe the software you intended to use. Nix packages
+Nix allows you to precisely describe the software you intended to use. Nix packages
 are defined by their dependencies, so they inherently retain their SBOM (Software Bill of Materials)
 by default. By leveraging NixOS modules, one can also create configurable services and compose
-it into coherent systems. The combination of Nix + NixOS allows you to have delcarative configuration
-of both services and sytems.
+it into coherent systems. The combination of Nix + NixOS allows you to have declarative configuration
+of both services and systems.
 
 ## System Administrators (home to enterprise)
 
