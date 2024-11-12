@@ -1,5 +1,5 @@
 {
-  description = "Nix-book";
+  description = "Nix-Book: The Nix Package Manager";
 
   inputs = {
     utils.url = "github:numtide/flake-utils";
@@ -8,23 +8,21 @@
 
   outputs = { self, nixpkgs, utils }:
     let
+      systems = ["x86_64-linux" "aarch64-linux" "x86_64-darwin"];
       localOverlay = import ./nix/overlay.nix;
-      pkgsForSystem = system: import nixpkgs {
-        overlays = [
-          localOverlay
-        ];
-        inherit system;
+      forSystem = system: rec {
+        legacyPackages = import nixpkgs {
+          inherit system;
+          overlays = [localOverlay];
+        };
+        packages = utils.lib.flattenTree {
+          inherit (legacyPackages) devShell nix-book;
+        };
+        defaultPackage = packages.nix-book;
+        apps.nix-book = utils.lib.mkApp {drv = packages.nix-book;};
+        hydraJobs = {inherit (legacyPackages) nix-book;};
+        checks = {inherit (legacyPackages) nix-book;};
       };
-    in utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" ] (system: rec {
-      legacyPackages = pkgsForSystem system;
-      packages = utils.lib.flattenTree {
-        inherit (legacyPackages) devShell nix-book;
-      };
-      defaultPackage = packages.nix-book;
-      apps.nix-book = utils.lib.mkApp { drv = packages.nix-book; };
-      hydraJobs = { inherit (legacyPackages) nix-book; };
-      checks = { inherit (legacyPackages) nix-book; };
-  }) // {
-    overlay = localOverlay;
-  };
+    in
+      utils.lib.eachSystem systems forSystem // { overlay = localOverlay; };
 }
