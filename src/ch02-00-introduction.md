@@ -35,7 +35,7 @@ in software development. Nix can help mitigate this by allowing environments to 
 controlled and maintained along with a project. Nix can also lower the onboarding time of new
 developers by automating installation instructions.
 
-## DevOps (Operations)
+## DevOps
 
 Nix allows you to precisely describe the software you intend to use. Nix packages
 are defined by their dependencies, so they inherently retain their SBOM (Software Bill of Materials)
@@ -45,22 +45,23 @@ of both services and systems of multiple machines and architectures.
 
 ## System Administrators (home to enterprise)
 
-Ever have to maintain a few systems to a few hundred systems? The ability to version control and manipulate
-systems-as-code enables a new paradigm of system configuration management. Atomically apply or rollback
-system updates for each system. Nixpkgs can also be freely extended to include personal or private additions
-of software; this allows you to leverage all other Nix tooling as though your application-specific software
-was a first-class citizen.
+Nix allows you to maintain dozens to hundreds of systems: Placing a system's configuration as code
+in version control enables a new paradigm of system configuration management. Atomically apply or
+rollback system updates for each system. Nixpkgs can be freely extended to include private additions
+to software.
 
 Nix largely replaces the need for Docker. However, Nix can also be used to produce Docker images
-if there is a downstream technology which consumes OCI images as an interface (E.g. kubernetes).
+if there is a downstream technology which consumes OCI images as an interface (e.g. Kubernetes).
 
 ## Power Users
 
-Do you have incredible specific or opinated environments? Nix allows you to declaratively create
-project (flakes), user (home-manager), or system (NixOS) environments with the exact software
-and configuration you desired. Whether you're building software or ricing a desktop, Nix will allow
-you to version control and specify your configuration exactly how you intended, and persist this
-across multiple machines.
+Nix allows for incredibly specific or opinionated environments. Nix allows you to declare projects
+(flakes), user directory configuration ([home-manager][hm]), or system environments (NixOS) with the exact
+same software. Whether you're a software developer, or you're tweaking the appearance of your desktop
+system, Nix will allow you to control and specify configuration exactly as you intend, and persist
+this across multiple machines.
+
+[hm]: https://github.com/nix-community/home-manager
 
 # The Nix Ecosystem
 
@@ -69,16 +70,17 @@ There's roughly four layers of abstractions in the official Nix ecosystem, these
 - Nix - The domain-specifc language used to write Nix expressions
 - Nix - The package manager
 - Nixpkgs - The official Nix package repository
-- NixOS - A linux distribution built upon nixpkgs
+- NixOS - A Linux distribution built on Nixpkgs
 
-There are also a few unofficial projects which are commonly used within the community:
-- [Home-manager](https://github.com/nix-community/home-manager) - NixOS-like user configuration for linux or MacOS built upon nixpkgs
+There are also a several unofficial projects commonly used within the community. Some of these are:
+
+- [home-manager][hm] - NixOS-like user configuration for Linux or MacOS built on Nixpkgs
 - [Nix-darwin](https://github.com/LnL7/nix-darwin) - NixOS-like configuration, but for MacOS
 
 These topics will be discussed in greater detail in later sections, but a
 quick summary of official projects are provided below.
 
-## The Nix Language
+## Nix: The Language
 
 The Nix language is a Domain-Specific Language (DSL) which is designed to
 handle package configuration. Nix can be thought of [JSON](https://en.wikipedia.org/wiki/JSON) +
@@ -90,7 +92,7 @@ no types. What is left is a small functional programming language. After all,
 Nix's goal is to take a few inputs such as a system platform, and produce a build
 graph which can be used as a recipe to build software.
 
-## Nix the Package Manager
+## Nix: The Package Manager
 
 The Nix Package Manager began its life as the [PhD thesis work](https://edolstra.github.io/pubs/phd-thesis.pdf)
 of Eelco Dolstra. The goal was to bring discipline to the software landscape. Similar to
@@ -101,12 +103,12 @@ of Nix is that of the *derivation*. It encapsulates everything about a piece of 
 and these derivations can be referenced from other derivations constituting a *directed, acyclic
 graph* (DAG) of how to built that software from source.
 
-## Nixpkgs
+## Nixpkgs: The Package Repository
 
 Nixpkgs is the official package repository for the Nix community. It contains the logic
 on how to build over 60,000+ software packages. Nixpkgs can be thought of as an
 expert body-of-knowledge on the subject of how to build software. When a user
-asks for the "firefox" package, the Nix package manager is able to query nixpkgs
+asks for the "firefox" package, the Nix package manager is able to query Nixpkgs
 and produce a build graph on how to build Firefox and all of its dependencies down
 to the C compiler, for that user's platform.
 This allows for a great deal of freedom: Nix can be used on any Linux distribution and MacOS as
@@ -115,11 +117,11 @@ first class supported OS'es, and to a lesser degree on many other UNIX-like OS'e
 Nixpkgs is also supported by [Hydra](https://hydra.nixos.org/), which provides
 pre-built binaries of libre software for Linux and MacOS.
 
-## NixOS
+## NixOS: The Operating System
 
-NixOS is a [non-FHS][fhs] Linux distribution which leverages nixpkgs to provide a wealth
+NixOS is a [non-FHS][fhs] Linux distribution which leverages Nixpkgs to provide a wealth
 of software ready to be combined into a system environment. The concept of a Nix
 derivation is extended here to include service configuration and system creation.
 The entirety of the system is represented as a derivation which gives it many of
-its defining qualities such as atomic rollbacks, system-as-a-configuration-file,
+its defining qualities such as atomic rollbacks, system-as-a-configuration-file, and
 extensive user configuration potential.
