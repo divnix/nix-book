@@ -2,37 +2,46 @@
 
 # The Nix Package Manager
 
-Nix is a package manager which focuses on
-caputuring all inputs which contribute to building software.
+Nix is a package manager that focuses on
+capturing all inputs which contribute to building software.
 The result of factoring all of the information about building
-the software is called a derivation. This aggregated information includes where
-the source code is pulled, configuration flags, patches,
+the software is called a *derivation*. This information includes from where
+the source code is downloaded, configuration flags, patches,
 dependencies, build steps, installation steps, and many other potential inputs.
 
-This information is aggregated through hashing, and allows nix to
+This information is hashed, which allows Nix to
 describe and reference the exact software which is intended to use.
-This enables nix to be used on any system because it's assumptions
-do not collide with the assumptions of a host system. This also means that
-nix does not adhere to the traditional [File Hierarchical System(FHS)](https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard)
+This enables Nix to be used on any system because its assumptions
+do not collide with the assumptions of a host system. This means that
+Nix does not adhere to the traditional [File Hierarchical System (FHS)][fhs]
 but it also means that it's not limited to FHS's restriction of only having
-a single variant of a piece of software.
+a single variant of a piece of software: You can have multiple versions of
+the same software installed, or the same version installed twice compiled with
+two different set of compile flags without conflict.
+
+[fhs]: https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard
 
 # Who is Nix For
 
 ## Teams of Developers
 
-Development needs to have similar tooling across every individual. Having divergent
-development environments and productions environments is a major cause of regressions
-in software development. Nix can help mitigate this by allowing development environments
-to be version controlled and maintained along with a project.
+Each developer on a team needs access to the same development environment.
+
+Development environments need to reflect the build and production environments.
+
+When these diverge, software may fail to build or run properly after a software delivery was made.
+Having divergent development, build and production environments is a major cause of regressions
+in software development. Nix can help mitigate this by allowing environments to be version
+controlled and maintained along with a project. Nix can also lower the onboarding time of new
+developers by automating installation instructions.
 
 ## DevOps (Operations)
 
-Nix allows you to precisely describe the software you intended to use. Nix packages
+Nix allows you to precisely describe the software you intend to use. Nix packages
 are defined by their dependencies, so they inherently retain their SBOM (Software Bill of Materials)
 by default. By leveraging NixOS modules, one can also create configurable services and compose
-it into coherent systems. The combination of Nix + NixOS allows you to have declarative configuration
-of both services and systems.
+them into coherent systems. The combination of Nix + NixOS allows you to have declarative configuration
+of both services and systems of multiple machines and architectures.
 
 ## System Administrators (home to enterprise)
 
@@ -42,21 +51,22 @@ system updates for each system. Nixpkgs can also be freely extended to include p
 of software; this allows you to leverage all other Nix tooling as though your application-specific software
 was a first-class citizen.
 
-Also, Nix largely invalidates the need for docker. However, nix can also be used to produce docker images
-if there is a downstream technology which consumes oci images as an interface (E.g. kubernetes).
+Nix largely replaces the need for Docker. However, Nix can also be used to produce Docker images
+if there is a downstream technology which consumes OCI images as an interface (E.g. kubernetes).
 
 ## Power Users
 
 Do you have incredible specific or opinated environments? Nix allows you to declaratively create
 project (flakes), user (home-manager), or system (NixOS) environments with the exact software
-and configuration you desired. Whether you're building software or ricing a desktop, nix will allow
-you to version control and specify your configuration exactly how you intended.
+and configuration you desired. Whether you're building software or ricing a desktop, Nix will allow
+you to version control and specify your configuration exactly how you intended, and persist this
+across multiple machines.
 
 # The Nix Ecosystem
 
-There's roughly four layers of abstractions in the official nix ecosystem, these are:
+There's roughly four layers of abstractions in the official Nix ecosystem, these are:
 
-- Nix - The domain-specifc language used to write nix expressions
+- Nix - The domain-specifc language used to write Nix expressions
 - Nix - The package manager
 - Nixpkgs - The official Nix package repository
 - NixOS - A linux distribution built upon nixpkgs
@@ -65,51 +75,51 @@ There are also a few unofficial projects which are commonly used within the comm
 - [Home-manager](https://github.com/nix-community/home-manager) - NixOS-like user configuration for linux or MacOS built upon nixpkgs
 - [Nix-darwin](https://github.com/LnL7/nix-darwin) - NixOS-like configuration, but for MacOS
 
-All of these topics will be discussed in greater detail in later sections, but a 
+These topics will be discussed in greater detail in later sections, but a
 quick summary of official projects are provided below.
 
 ## The Nix Language
 
 The Nix language is a Domain-Specific Language (DSL) which is designed to
-handle package configuration. Nix can be thought of [JSON](https://en.wikipedia.org/wiki/JSON) + functions +
-some syntax sugar. It's main goal is to provide effect-free evaluation of
-package configuration, to this point Nix is restricted in many ways and lacks
+handle package configuration. Nix can be thought of [JSON](https://en.wikipedia.org/wiki/JSON) +
+functions + imports + some syntax sugar. Its main goal is to provide *effect-free evaluation* of
+package configuration. For that reason, Nix is restricted in many ways and lacks
 many features from generic programming languages. There is very limited input and
 output possible to the system, there are no loops, no concurrency primitives, and
-no types. What is left is a small functional-oriented programming language. After all,
+no types. What is left is a small functional programming language. After all,
 Nix's goal is to take a few inputs such as a system platform, and produce a build
-graph which can be used to build software.
+graph which can be used as a recipe to build software.
 
 ## Nix the Package Manager
 
 The Nix Package Manager began its life as the [PhD thesis work](https://edolstra.github.io/pubs/phd-thesis.pdf)
 of Eelco Dolstra. The goal was to bring discipline to the software landscape. Similar to
 how structured programming helped tame the complexity of goto through introducing constructs such
-as loops and logic flow; so too does nix attempt to tame the chaos of package management
-through explicit descriptions of software and their dependencies. The truely novel idea
+as loops and logic flow; so too does Nix attempt to tame the chaos of package management
+through explicit descriptions of software and their dependencies. The truly novel idea
 of Nix is that of the *derivation*. It encapsulates everything about a piece of software,
-and these derivations can be referenced from other derivations constituting a Directed-Acyclic-Graph
-of how to built that software from source.
+and these derivations can be referenced from other derivations constituting a *directed, acyclic
+graph* (DAG) of how to built that software from source.
 
 ## Nixpkgs
 
 Nixpkgs is the official package repository for the Nix community. It contains the logic
 on how to build over 60,000+ software packages. Nixpkgs can be thought of as an
 expert body-of-knowledge on the subject of how to build software. When a user
-asks for the "firefox" package, the nix package manager is able to input the user's computer
-platform into nixpkgs, and nixpkgs is then able to produce a build graph on
-how to build firefox and all of it's dependencies down to the C compiler.
-This allows for a great deal of freedom in how nix is leveraged, and nix can be used on any Linux distribution and MacOS as
-first class supported OS's, and to a much lesser degree on many other UNIX-like OS's.
+asks for the "firefox" package, the Nix package manager is able to query nixpkgs
+and produce a build graph on how to build Firefox and all of its dependencies down
+to the C compiler, for that user's platform.
+This allows for a great deal of freedom: Nix can be used on any Linux distribution and MacOS as
+first class supported OS'es, and to a lesser degree on many other UNIX-like OS'es.
 
 Nixpkgs is also supported by [Hydra](https://hydra.nixos.org/), which provides
 pre-built binaries of libre software for Linux and MacOS.
 
 ## NixOS
 
-NixOS is a non-FHS Linux distribution which leverages nixpkgs to provide a wealth
-of software ready to be combined into a system environment. The concept of a nix
+NixOS is a [non-FHS][fhs] Linux distribution which leverages nixpkgs to provide a wealth
+of software ready to be combined into a system environment. The concept of a Nix
 derivation is extended here to include service configuration and system creation.
-The entirity of the system is represented as a derivation which gives it many of
-it's defining qualities such as atomic rollbacks, system-as-a-configuration-file,
+The entirety of the system is represented as a derivation which gives it many of
+its defining qualities such as atomic rollbacks, system-as-a-configuration-file,
 extensive user configuration potential.
