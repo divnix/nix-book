@@ -20,5 +20,5 @@ jobs:
 
     - name: Build book
       run: |
-        nix-env -iA mdbook -f '<nixpkgs>'
+        nix-shell '<nixpkgs>' -p mdbook
         mdbook build
